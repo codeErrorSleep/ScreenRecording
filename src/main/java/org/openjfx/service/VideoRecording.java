@@ -1,19 +1,20 @@
 package org.openjfx.service;
 
 import org.bytedeco.javacpp.avcodec;
-import org.bytedeco.javacpp.avutil;
+
 import org.bytedeco.javacv.FFmpegFrameRecorder;
 import org.bytedeco.javacv.Frame;
 import org.bytedeco.javacv.FrameRecorder;
 import org.bytedeco.javacv.Java2DFrameConverter;
+import org.openjfx.domain.Audio;
 import org.openjfx.domain.Video;
-import org.openjfx.test.VideoRecord;
 
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.DataLine;
-import javax.sound.sampled.TargetDataLine;
+import javax.sound.sampled.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.ShortBuffer;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -26,38 +27,71 @@ public class VideoRecording {
     //线程池 screenTimer
     private ScheduledThreadPoolExecutor screenTimer;
     //获取屏幕尺寸
-    private final Rectangle rectangle = new Rectangle(1920, 1080); // 截屏的大小
+//    private Rectangle rectangle; // 截屏的大小
+    private int screenWidth;
+    private int screenHeigth;
+    private Rectangle rectangle = new Rectangle(1920, 1080); // 截屏的大小
+
     //视频类 FFmpegFrameRecorder
     private FFmpegFrameRecorder recorder;
+//音频类
+    private AudioFormat audioFormat;
     private Robot robot;
     //线程池 exec
     private ScheduledThreadPoolExecutor exec;
     private TargetDataLine line;
-    private AudioFormat audioFofrmat;
     private DataLine.Info dataLineInfo;
+//    判断是否打开麦克风
     private boolean isHaveDevice = true;
     private long startTime = 0;
     private long videoTS = 0;
     private long pauseTime = 0;
-    private double frameRate = 10;
+    private double frameRate = 25;
 
 
 
-    public VideoRecording(Video video, boolean isHaveDevice){
-        recorder = new FFmpegFrameRecorder(video.getFileName()+ ".mp4", 1920, 1080);
+    public VideoRecording(Video video, Audio audio, boolean isHaveDevice){
+//        设置屏幕长度
+        screenWidth=video.getScreenWidth();
+        screenHeigth=video.getScreenHeigth();
+//        截图大小
+        rectangle.setSize(screenWidth,screenHeigth);
+
+//        视频属性设置
+        recorder = new FFmpegFrameRecorder(video.getSavePath(), screenWidth,screenHeigth);
 //        视频编码格式e
-        recorder.setVideoCodec(avcodec.AV_CODEC_ID_MPEG4); // 13
+//        recorder.setVideoCodec(avcodec.AV_CODEC_ID_MPEG4); // 13
+        recorder.setVideoCodec(avcodec.AV_CODEC_ID_H264);
+
 //        视频文件格式
         recorder.setFormat(video.getSaveFormat());
+        // 视频帧率(保证视频质量的情况下最低25，低于25会出现闪屏)
         recorder.setFrameRate(video.getFrameRate());
+        // 关键帧间隔，一般与帧率相同或者是视频帧率的两倍
+        recorder.setGopSize((int) frameRate * 2);
 
-        recorder.setVideoQuality(0);
-        recorder.setVideoOption("crf", "23");
-        // 2000 kb/s, 720P视频的合理比特率范围
-        recorder.setVideoBitrate(1000000);
-
+        recorder.setVideoBitrate(2000000);
+        recorder.setVideoOption("tune", "zerolatency");
         recorder.setVideoOption("preset", "slow");
-        recorder.setPixelFormat(avutil.AV_PIX_FMT_YUV420P); // yuv420p
+        recorder.setVideoQuality(0);
+        recorder.setVideoOption("crf", "25");
+
+//音频设置
+        // 不可变(固定)音频比特率
+        recorder.setAudioOption("crf", "0");
+        // 最高质量
+        recorder.setAudioQuality(audio.getAudioQuality());
+        // 音频比特率
+        recorder.setAudioBitrate(audio.getAudioBitrate());
+        // 音频采样率
+        recorder.setSampleRate(audio.getSampleRate());
+        // 双通道(立体声)
+        recorder.setAudioChannels(audio.getAudioChannels());
+        // 音频编/解码器
+        recorder.setAudioCodec(avcodec.AV_CODEC_ID_AAC);
+
+
+
         try {
             robot = new Robot();
         } catch (AWTException e) {
@@ -85,52 +119,136 @@ public class VideoRecording {
         if (pauseTime == 0) {
             pauseTime = System.currentTimeMillis();
         }
+        // 如果有录音设备则启动录音线程
+        if (isHaveDevice) {
+            new Thread(new Runnable() {
 
-        // 录屏
+                @Override
+                public void run() {
+                    // TODO Auto-generated method stub
+                    caputre();
+                }
+            }).start();
+        }
+
+
+
+            // 录屏
         screenTimer = new ScheduledThreadPoolExecutor(1);
         screenTimer.scheduleAtFixedRate(new Runnable() {
             @Override
             public void run() {
-//              创建截图图片对象
-                BufferedImage screenCapture = robot.createScreenCapture(rectangle);
-                BufferedImage videoImg = new BufferedImage(1920, 1080,
-                        BufferedImage.TYPE_3BYTE_BGR); // 声明一个BufferedImage用重绘截图
-//              基于图片对象打开绘图
-                Graphics2D videoGraphics = videoImg.createGraphics();// 创建videoImg的Graphics2D
-//              对截图进行处理
-                videoGraphics.setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_DISABLE);
-                videoGraphics.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING,
-                        RenderingHints.VALUE_COLOR_RENDER_SPEED);
-                videoGraphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
-                videoGraphics.drawImage(screenCapture, 0, 0, null); // 重绘截图
-//                BufferedImage不支持NIO缓冲区，提供ｂｕｆｆ到ｆｒａｍｅ的转换
-                Java2DFrameConverter java2dConverter = new Java2DFrameConverter();
-                Frame frame = java2dConverter.convert(videoImg);
-                try {
-                    videoTS = 1000L
-                            * (System.currentTimeMillis() - startTime - (System.currentTimeMillis() - pauseTime));
-                    // 检查偏移量
-                    if (videoTS > recorder.getTimestamp()) {
-                        recorder.setTimestamp(videoTS);
-                    }
-                    recorder.record(frame); // 录制视频
-                } catch (FrameRecorder.Exception e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-                // 释放资源
-                videoGraphics.dispose();
-                videoGraphics = null;
-                videoImg.flush();
-                videoImg = null;
-                java2dConverter = null;
-                screenCapture.flush();
-                screenCapture = null;
-
+//                处理每张截图
+                dealImage();
             }
         }, (int) (1000 / frameRate), (int) (1000 / frameRate), TimeUnit.MILLISECONDS);
 
     }
+
+
+
+    /**
+     * @author      qiushao
+    处理截图
+     * @date        20-4-19 下午2:52
+     */
+    public void dealImage(){
+        // 截屏
+        BufferedImage screenCapture = robot.createScreenCapture(rectangle);
+        // 声明一个BufferedImage用重绘截图
+        BufferedImage videoImg = new BufferedImage(screenWidth, screenHeigth,
+                BufferedImage.TYPE_3BYTE_BGR);
+        // 创建videoImg的Graphics2D
+        Graphics2D videoGraphics = videoImg.createGraphics();
+
+        videoGraphics.setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_DISABLE);
+        videoGraphics.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING,
+                RenderingHints.VALUE_COLOR_RENDER_SPEED);
+        videoGraphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_SPEED);
+        // 重绘截图
+        videoGraphics.drawImage(screenCapture, 0, 0, null);
+
+        Java2DFrameConverter java2dConverter = new Java2DFrameConverter();
+
+        Frame frame = java2dConverter.convert(videoImg);
+        try {
+            videoTS = 1000
+                    * (System.currentTimeMillis() - startTime - (System.currentTimeMillis() - pauseTime));
+            // 检查偏移量
+            if (videoTS > recorder.getTimestamp()) {
+                recorder.setTimestamp(videoTS);
+            }
+            recorder.record(frame); // 录制视频
+        } catch (FrameRecorder.Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        // 释放资源
+        videoGraphics.dispose();
+        videoGraphics = null;
+        videoImg.flush();
+        videoImg = null;
+        java2dConverter = null;
+        screenCapture.flush();
+        screenCapture = null;
+
+    }
+
+
+    public void caputre() {
+        audioFormat = new AudioFormat(44100.0F, 16, 2, true, false);
+        // 通过AudioSystem获取本地音频混合器信息
+        Mixer.Info[] minfoSet = AudioSystem.getMixerInfo();
+        // 通过AudioSystem获取本地音频混合器
+        Mixer mixer = AudioSystem.getMixer(minfoSet[4]);
+
+
+        dataLineInfo = new DataLine.Info(TargetDataLine.class, audioFormat);
+        try {
+            line = (TargetDataLine) AudioSystem.getLine(dataLineInfo);
+        } catch (LineUnavailableException e1) {
+            // TODO Auto-generated catch block
+            System.out.println("#################");
+        }
+        try {
+            line.open(audioFormat);
+        } catch (LineUnavailableException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        line.start();
+
+        final int sampleRate = (int) audioFormat.getSampleRate();
+        final int numChannels = audioFormat.getChannels();
+
+        int audioBufferSize = sampleRate * numChannels;
+        final byte[] audioBytes = new byte[audioBufferSize];
+
+        exec = new ScheduledThreadPoolExecutor(1);
+        exec.scheduleAtFixedRate(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    int nBytesRead = line.read(audioBytes, 0, line.available());
+                    int nSamplesRead = nBytesRead / 2;
+                    short[] samples = new short[nSamplesRead];
+
+                    // Let's wrap our short[] into a ShortBuffer and
+                    // pass it to recordSamples
+                    ByteBuffer.wrap(audioBytes).order(ByteOrder.LITTLE_ENDIAN).asShortBuffer().get(samples);
+                    ShortBuffer sBuff = ShortBuffer.wrap(samples, 0, nSamplesRead);
+
+                    // recorder is instance of
+                    // org.bytedeco.javacv.FFmpegFrameRecorder
+                    recorder.recordSamples(sampleRate, numChannels, sBuff);
+                    // System.gc();
+                } catch (org.bytedeco.javacv.FrameRecorder.Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }, 0, (int) (1000 / frameRate), TimeUnit.MILLISECONDS);
+    }
+
 
 
     /**
@@ -155,6 +273,7 @@ public class VideoRecording {
                     line.close();
                 }
                 dataLineInfo = null;
+                audioFormat = null;
             }
         } catch (FrameRecorder.Exception e) {
             // TODO Auto-generated catch block

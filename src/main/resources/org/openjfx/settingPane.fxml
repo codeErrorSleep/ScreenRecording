@@ -7,7 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root prefHeight="200.0" prefWidth="200.0" type="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.controller.SettingPaneController">
    <children>
       <Pane layoutX="335.0" layoutY="310.0" prefHeight="76.0" prefWidth="256.0">
          <children>
@@ -19,16 +19,18 @@
          <children>
             <Label alignment="CENTER" prefHeight="50.0" prefWidth="100.0" text="视频保存位置" />
             <TextField prefHeight="29.0" prefWidth="391.0" />
-            <Button mnemonicParsing="false" prefHeight="48.0" prefWidth="90.0" text="浏览">
+            <Button fx:id="showFileButton" mnemonicParsing="false" onAction="#getLocalFile" prefHeight="48.0" prefWidth="90.0" text="浏览">
                <FlowPane.margin>
                   <Insets left="5.0" />
                </FlowPane.margin>
             </Button>
             <Label alignment="CENTER" prefHeight="50.0" prefWidth="100.0" text="视频帧率" />
-            <ChoiceBox prefWidth="150.0" />
-            <Label alignment="CENTER" prefHeight="50.0" prefWidth="100.0" text="视频编码格式" />
-            <ChoiceBox prefWidth="150.0" />
+            <ComboBox fx:id="frameRateComboBox" editable="true" prefWidth="150.0" />
+            <Label alignment="CENTER" prefHeight="50.0" prefWidth="123.0" text="视频编码格式" />
+            <ComboBox prefWidth="150.0" />
+            <Label alignment="CENTER" prefHeight="50.0" prefWidth="100.0" text="分辨率" />
+            <ComboBox prefWidth="150.0" />
          </children>
       </FlowPane>
    </children>
-</AnchorPane>
+</fx:root>

@@ -21,15 +21,9 @@
       <MenuBar cache="true" prefHeight="32.0" prefWidth="775.0" styleClass="primaryStage.initStyle(StageStyle.UNDECORATED);">
         <menus>
           <Menu mnemonicParsing="false" text="文件">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="设置">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
+               <items>
+                  <MenuItem fx:id="settingPane" mnemonicParsing="false" onAction="#getSettingPane" text="设置" />
+               </items></Menu>
         </menus>
       </MenuBar>
       <Label alignment="CENTER" prefHeight="18.0" prefWidth="62.0" text="屏幕音量" />
@@ -38,10 +32,13 @@
             <Insets />
          </opaqueInsets>
       </Slider>
-      <Label text="麦克风" />
-      <Slider orientation="VERTICAL" prefHeight="140.0" prefWidth="60.0" />
+      <ToggleButton fx:id="microPhoneButton" mnemonicParsing="false" onAction="#isOpenMicroPhone" prefHeight="57.0" prefWidth="95.0" text="麦克风">
+         <FlowPane.margin>
+            <Insets right="10.0" />
+         </FlowPane.margin>
+      </ToggleButton>
       <ComboBox prefHeight="31.0" prefWidth="160.0" promptText="分辨率" />
-      <Label alignment="CENTER" prefHeight="89.0" prefWidth="155.0" text="录制时间" />
+      <Label alignment="CENTER" prefHeight="82.0" prefWidth="140.0" text="录制时间" />
       <ToggleButton fx:id="recordingButton" mnemonicParsing="false" onAction="#startRecording" prefHeight="72.0" prefWidth="125.0" text="录制" />
       <Pane prefHeight="148.0" prefWidth="139.0">
          <children>

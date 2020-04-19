@@ -35,12 +35,15 @@ public class Video {
     public Video(){
         screenWidth=1920;
         screenHeigth=1080;
-        savePath="";
+        savePath="outputVideo/";
 //        处理保存的时间
         fileName= DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss").format(LocalDateTime.now());
 
-        saveFormat="mp4";
-        frameRate=5;
+
+        savePath=fileName+".flv";
+
+        saveFormat="flv";
+        frameRate=25;
 
     }
 
