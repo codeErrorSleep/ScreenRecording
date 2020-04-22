@@ -1,7 +1,7 @@
 package org.openjfx;
 
 import javafx.application.Application;
-
+import org.openjfx.controller.MainPane;
 
 
 public class Main {
@@ -12,7 +12,7 @@ public class Main {
 //        System.out.println(screenWidth+""+screenHeight);
 
 
-        Application.launch(App.class);
+        Application.launch(MainPane.class);
 
     }
 

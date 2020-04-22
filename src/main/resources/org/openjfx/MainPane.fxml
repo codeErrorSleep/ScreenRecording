@@ -38,12 +38,17 @@
          </FlowPane.margin>
       </ToggleButton>
       <ComboBox prefHeight="31.0" prefWidth="160.0" promptText="分辨率" />
-      <Label alignment="CENTER" prefHeight="82.0" prefWidth="140.0" text="录制时间" />
+      <Pane prefHeight="140.0" prefWidth="127.0">
+         <children>
+            <Label alignment="CENTER" layoutX="2.0" layoutY="33.0" prefHeight="41.0" prefWidth="125.0" text="录制时间" />
+            <Label fx:id="timeLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="5.0" layoutY="74.0" prefHeight="41.0" prefWidth="119.0" text="0:00:00" textAlignment="CENTER" />
+         </children>
+      </Pane>
       <ToggleButton fx:id="recordingButton" mnemonicParsing="false" onAction="#startRecording" prefHeight="72.0" prefWidth="125.0" text="录制" />
       <Pane prefHeight="148.0" prefWidth="139.0">
          <children>
             <Button layoutX="24.0" layoutY="25.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="91.0" text="暂停" />
-            <Button layoutX="24.0" layoutY="87.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="91.0" text="截图" />
+            <Button fx:id="screenShotsButton" layoutX="24.0" layoutY="87.0" mnemonicParsing="false" onAction="#screenShots" prefHeight="41.0" prefWidth="91.0" text="截图" />
          </children>
       </Pane>
    </children>
