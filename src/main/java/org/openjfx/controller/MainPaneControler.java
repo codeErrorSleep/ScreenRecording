@@ -15,8 +15,11 @@ import org.openjfx.domain.Video;
 import org.openjfx.service.CaptureScreen;
 import org.openjfx.service.VideoRecording;
 
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.time.LocalTime;
+
+
 
 /**
 * @Description:    主界面控制类
@@ -37,7 +40,7 @@ public class MainPaneControler {
     //    判断是否打开麦克风标志
     private boolean isMicroPhone=false;
 
-    private CaptureScreen captureScreen;
+//    private CaptureScreen captureScreen;
 
 
 
@@ -61,10 +64,8 @@ public class MainPaneControler {
 //截图
     @FXML
     private void screenShots(){
-//            captureScreen=new CaptureScreen();
-//            captureScreen.processingImages();
-//            captureScreen.saveFile();
-//            BufferedImage image = robot.createScreenCapture(screenRectangle);
+        CaptureScreen captureScreen=new CaptureScreen();
+        captureScreen.test();
 
     }
 
@@ -154,7 +155,6 @@ public class MainPaneControler {
         }
 
     }
-
 
 
 

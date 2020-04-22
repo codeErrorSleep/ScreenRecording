@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.stage.Stage;
+import org.openjfx.service.CaptureScreen;
 
 import java.awt.event.ActionEvent;
 import java.io.IOException;
@@ -35,9 +36,21 @@ public class SettingPaneController {
     private void getLocalFile(ActionEvent event){
         showFileButton.setText("test");
 
+        try {
+            CaptureScreen captureScreen=new CaptureScreen();
+            captureScreen.processingImages();
+            captureScreen.saveFile();
+        }catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
+    @FXML
+    private void screenShots(){
+        CaptureScreen captureScreen = new CaptureScreen();
+        captureScreen.test();
 
+    }
 
 
 
