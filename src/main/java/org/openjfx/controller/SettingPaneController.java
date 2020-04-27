@@ -1,57 +1,40 @@
 package org.openjfx.controller;
 
-
-import javafx.application.Application;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.stage.Stage;
-import org.openjfx.service.CaptureScreen;
+import javafx.scene.control.TextField;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Window;
 
-import java.awt.event.ActionEvent;
-import java.io.IOException;
+import java.io.File;
 
 public class SettingPaneController {
 
+    @FXML
+    private TextField fileText;
 
     /**
-    * 选择文件夹按钮
-    */
+     * 选择文件夹按钮
+     */
     @FXML
     private Button showFileButton;
-
-    /**
-    * 视频帧率选择
-    */
-    @FXML
-    private ComboBox<String> frameRateComboBox;
-
-
-
+    private Window stage;
 
     @FXML
-    private void getLocalFile(ActionEvent event){
-        showFileButton.setText("test");
+    private void screenShots() {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        File file = directoryChooser.showDialog(stage);
+        String path = file.getPath();//选择的文件夹路径
+        fileText.setText(path);
 
-        try {
-            CaptureScreen captureScreen=new CaptureScreen();
-            captureScreen.processingImages();
-            captureScreen.saveFile();
-        }catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
-    @FXML
-    private void screenShots(){
-        CaptureScreen captureScreen = new CaptureScreen();
-        captureScreen.test();
+        /*FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Resource File");
+        fileChooser.showOpenDialog(stage);*/
 
     }
-
 
 
 }
+
+
+

@@ -7,30 +7,26 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.controller.SettingPaneController">
+<AnchorPane prefHeight="610.0" prefWidth="548.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.controller.SettingPaneController">
    <children>
-      <Pane layoutX="335.0" layoutY="310.0" prefHeight="76.0" prefWidth="256.0">
+      <Pane layoutX="254.0" layoutY="539.0" prefHeight="60.0" prefWidth="294.0" AnchorPane.bottomAnchor="11.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Button mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="保存" />
-            <Button layoutX="128.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="100.0" text="取消" />
+            <Button layoutX="80.0" layoutY="18.0" mnemonicParsing="false" text="恢复默认值" />
+            <Button fx:id="saveButton" layoutX="216.0" layoutY="19.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="59.0" text="浏览" />
          </children>
       </Pane>
-      <FlowPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="264.0" prefWidth="598.0">
+      <Pane prefHeight="286.0" prefWidth="548.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label alignment="CENTER" prefHeight="50.0" prefWidth="100.0" text="视频保存位置" />
-            <TextField prefHeight="29.0" prefWidth="391.0" />
-            <Button fx:id="showFileButton" mnemonicParsing="false" onAction="#screenShots" prefHeight="48.0" prefWidth="90.0" text="浏览">
-               <FlowPane.margin>
-                  <Insets left="5.0" />
-               </FlowPane.margin>
-            </Button>
-            <Label alignment="CENTER" prefHeight="50.0" prefWidth="100.0" text="视频帧率" />
-            <ComboBox fx:id="frameRateComboBox" editable="true" prefWidth="150.0" />
-            <Label alignment="CENTER" prefHeight="50.0" prefWidth="123.0" text="视频编码格式" />
-            <ComboBox prefWidth="150.0" />
-            <Label alignment="CENTER" prefHeight="50.0" prefWidth="100.0" text="分辨率" />
-            <ComboBox prefWidth="150.0" />
+            <Label layoutX="21.0" layoutY="48.0" text="视频保存地址：" />
+            <TextField fx:id="fileText" layoutX="129.0" layoutY="43.0" prefHeight="30.0" prefWidth="316.0" />
+            <Button fx:id="showfilebutton" layoutX="464.0" layoutY="42.0" mnemonicParsing="false" onAction="#screenShots" prefHeight="30.0" prefWidth="59.0" text="浏览" />
          </children>
-      </FlowPane>
+      </Pane>
+      <ChoiceBox layoutX="129.0" layoutY="118.0" prefWidth="150.0" />
+      <Label layoutX="51.0" layoutY="123.0" text="视频格式：" />
+      <Label layoutX="52.0" layoutY="193.0" text="视频帧率：" />
+      <ChoiceBox layoutX="130.0" layoutY="188.0" prefWidth="150.0" />
+      <ChoiceBox layoutX="130.0" layoutY="258.0" prefWidth="150.0" />
+      <Label layoutX="67.0" layoutY="263.0" text="分辨率：" />
    </children>
 </AnchorPane>
