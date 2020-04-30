@@ -4,16 +4,16 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
-* @Description:    录制视频选项
-* @Author:         qiuShao
-* @CreateDate:     20-4-12 上午10:14
-*/
+ * @Description: 录制视频选项
+ * @Author: qiuShao
+ * @CreateDate: 20-4-12 上午10:14
+ */
 public class Video {
     /**
-    * 屏幕分辨率
-    */
-    private int screenWidth;
-    private int screenHeigth;
+     * 屏幕分辨率
+     */
+    private int videoWidth;
+    private int videoHeigth;
     /**
      * 视频保存位置
      */
@@ -27,25 +27,51 @@ public class Video {
      */
     private String saveFormat;
     /**
-    * 视频帧率
-    */
+     * 视频帧率
+     */
     private double frameRate;
 
-//    设置默认的视频选项
-    public Video(){
-        screenWidth=1920;
-        screenHeigth=1080;
-        savePath="outputVideo/";
+    /**
+    * 对视频实体类进行初始化
+    * @author      qiushao
+    * @date        20-4-30 下午10:31
+    */
+    public Video() {
+        videoWidth = 1920;
+        videoHeigth = 1080;
+        savePath = "outputVideo/";
 //        处理保存的时间
-        fileName= DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss").format(LocalDateTime.now());
+        fileName = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss").format(LocalDateTime.now());
 
 
-        savePath=fileName+".flv";
+        savePath = fileName + ".flv";
 
-        saveFormat="flv";
-        frameRate=25;
+        saveFormat = "flv";
+        frameRate = 25;
 
     }
+
+
+    /**
+     * 设置分辨率
+     * * "1920*1080","1650*1050","1024*768"
+     *
+     * @author qiushao
+     * @date 20-4-30 下午10:27
+     */
+    public void setWidthAndHeiht(String resolutions) {
+        if ("1920*1080".equals(resolutions)) {
+            videoWidth = 1920;
+            videoHeigth = 1080;
+        } else if ("1650*1050".equals(resolutions)) {
+            videoWidth = 1650;
+            videoHeigth = 1050;
+        } else if ("1024*768".equals(resolutions)) {
+            videoWidth = 1024;
+            videoHeigth = 768;
+        }
+    }
+
 
     public double getFrameRate() {
         return frameRate;
@@ -71,23 +97,24 @@ public class Video {
         this.saveFormat = saveFormat;
     }
 
-    public int getScreenWidth() {
-        return screenWidth;
+    public int getVideoWidth() {
+        return videoWidth;
     }
 
-    public void setScreenWidth(int screenWidth) {
-        this.screenWidth = screenWidth;
+    public void setVideoWidth(int videoWidth) {
+        this.videoWidth = videoWidth;
     }
 
-    public int getScreenHeigth() {
-        return screenHeigth;
+    public int getVideoHeigth() {
+        return videoHeigth;
     }
 
-    public void setScreenHeigth(int screenHeigth) {
-        this.screenHeigth = screenHeigth;
+    public void setVideoHeigth(int videoHeigth) {
+        this.videoHeigth = videoHeigth;
     }
 
     public String getSavePath() {
+        savePath=fileName + "."+saveFormat;
         return savePath;
     }
 

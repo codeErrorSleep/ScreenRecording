@@ -12,54 +12,75 @@ import java.io.IOException;
 
 
 /**
-* @Description:    保存和读取用户的保存设置(json)
-* @Author:         qiuShao
-* @CreateDate:     20-4-22 下午9:04
-*/
+ * @Description: 保存和读取用户的保存设置(json)
+ * @Author: qiuShao
+ * @CreateDate: 20-4-22 下午9:04
+ */
 public class SettingUtils {
-    public static void main(String args[]){
-        SettingUtils tester = new SettingUtils();
-        try {
+//    public static void main(String args[]){
+//        SettingUtils tester = new SettingUtils();
+//        tester.checkJsonFile();
+//    }
 
-            Video video=new Video();
-            tester.writeVideoJSON(video);
-
-            Audio audio=new Audio();
-            tester.writeAudioJSON(audio);
-
-
-//            Video video1= tester.reada();
-//            System.out.println(video1);
-        } catch (JsonParseException e) {
-            e.printStackTrace();
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+    /**
+     * 检查是否已有设置文件,有则读取,无就新建
+     *
+     * @return
+     * @author qiushao
+     * @date 20-4-30 上午11:25
+     */
+    public void checkJsonFile() {
+        File file = new File("videoSetting.json");
+//找不到文件直接新建音频视频文件
+        if (!file.exists()) {
+            Video video = new Video();
+            Audio audio = new Audio();
+            // 文件不存在
+            writeJsonFile(video,audio);
         }
     }
 
 
-    private void writeVideoJSON(Video video) throws JsonGenerationException, JsonMappingException, IOException{
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.writeValue(new File("videoSetting.json"), video);
+    /**
+     * 将video,audio写入到json文件
+     * @author qiushao
+     * @date 20-4-30 上午11:24
+     */
+    public void writeJsonFile(Video video,Audio audio) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.writeValue(new File("videoSetting.json"), video);
+            mapper.writeValue(new File("audioSetting.json"), audio);
+            System.out.println("保存文件成功");
+
+        } catch (Exception e) {
+//            JsonGenerationException, JsonMappingException, IOException
+            e.printStackTrace();
+        }
+
     }
 
 
-    private void writeAudioJSON(Audio audio) throws JsonGenerationException, JsonMappingException, IOException{
-        ObjectMapper mapper = new ObjectMapper();
-        mapper.writeValue(new File("audioSetting.json"), audio);
-    }
+    public Video readVidioJSON() {
+        Video video = new Video();
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            video = mapper.readValue(new File("videoSetting.json"), Video.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-    private Video readVidioJSON() throws JsonParseException, JsonMappingException, IOException{
-        ObjectMapper mapper = new ObjectMapper();
-        Video video= mapper.readValue(new File("videoSetting.json"), Video.class);
         return video;
     }
 
-    private Audio readAudioJSON() throws JsonParseException, JsonMappingException, IOException{
-        ObjectMapper mapper = new ObjectMapper();
-        Audio audio= mapper.readValue(new File("audioSetting.json"), Audio.class);
+    public Audio readAudioJSON() {
+        Audio audio = new Audio();
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            audio = mapper.readValue(new File("audioSetting.json"), Audio.class);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return audio;
     }
 

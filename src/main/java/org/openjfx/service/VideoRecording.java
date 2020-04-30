@@ -28,9 +28,9 @@ public class VideoRecording {
     private ScheduledThreadPoolExecutor screenTimer;
     //获取屏幕尺寸
 //    private Rectangle rectangle; // 截屏的大小
-    private int screenWidth;
-    private int screenHeigth;
-    private Rectangle rectangle = new Rectangle(1920, 1080); // 截屏的大小
+    //获取屏幕尺寸
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    private Rectangle rectangle = new Rectangle(screenSize.width, screenSize.height); // 截屏的大小
 
     //视频类 FFmpegFrameRecorder
     private FFmpegFrameRecorder recorder;
@@ -51,14 +51,11 @@ public class VideoRecording {
 
 
     public VideoRecording(Video video, Audio audio, boolean isHaveDevice){
-//        设置屏幕长度
-        screenWidth=video.getScreenWidth();
-        screenHeigth=video.getScreenHeigth();
-//        截图大小
-        rectangle.setSize(screenWidth,screenHeigth);
-
+        /**
+         * 视频设置
+         */
 //        视频属性设置
-        recorder = new FFmpegFrameRecorder(video.getSavePath(), screenWidth,screenHeigth);
+        recorder = new FFmpegFrameRecorder(video.getSavePath(), screenSize.width, screenSize.height);
 //        视频编码格式e
 //        recorder.setVideoCodec(avcodec.AV_CODEC_ID_MPEG4); // 13
         recorder.setVideoCodec(avcodec.AV_CODEC_ID_H264);
@@ -69,6 +66,9 @@ public class VideoRecording {
         recorder.setFrameRate(video.getFrameRate());
         // 关键帧间隔，一般与帧率相同或者是视频帧率的两倍
         recorder.setGopSize((int) frameRate * 2);
+//        分辨率设置
+        recorder.setImageWidth(video.getVideoWidth());
+        recorder.setImageHeight(video.getVideoHeigth());
 
         recorder.setVideoBitrate(2000000);
         recorder.setVideoOption("tune", "zerolatency");
@@ -76,7 +76,10 @@ public class VideoRecording {
         recorder.setVideoQuality(0);
         recorder.setVideoOption("crf", "25");
 
-//音频设置
+
+        /**
+        * 音频设置
+        */
         // 不可变(固定)音频比特率
         recorder.setAudioOption("crf", "0");
         // 最高质量
@@ -156,7 +159,7 @@ public class VideoRecording {
         // 截屏
         BufferedImage screenCapture = robot.createScreenCapture(rectangle);
         // 声明一个BufferedImage用重绘截图
-        BufferedImage videoImg = new BufferedImage(screenWidth, screenHeigth,
+        BufferedImage videoImg = new BufferedImage(screenSize.width, screenSize.height,
                 BufferedImage.TYPE_3BYTE_BGR);
         // 创建videoImg的Graphics2D
         Graphics2D videoGraphics = videoImg.createGraphics();

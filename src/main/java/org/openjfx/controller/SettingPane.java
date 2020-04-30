@@ -12,7 +12,6 @@ public class SettingPane extends Application {
 
     private static Scene scene;
 
-    private static Stage stage;
 
     /**
      * 初始化设置文件

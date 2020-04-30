@@ -12,21 +12,21 @@
       <Pane layoutX="254.0" layoutY="539.0" prefHeight="60.0" prefWidth="294.0" AnchorPane.bottomAnchor="11.0" AnchorPane.rightAnchor="0.0">
          <children>
             <Button layoutX="80.0" layoutY="18.0" mnemonicParsing="false" text="恢复默认值" />
-            <Button fx:id="saveButton" layoutX="216.0" layoutY="19.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="59.0" text="浏览" />
+            <Button fx:id="saveSettingButton" layoutX="216.0" layoutY="19.0" mnemonicParsing="false" onAction="#saveSetting" prefHeight="30.0" prefWidth="59.0" text="保存" />
          </children>
       </Pane>
       <Pane prefHeight="286.0" prefWidth="548.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Label layoutX="21.0" layoutY="48.0" text="视频保存地址：" />
             <TextField fx:id="fileText" layoutX="129.0" layoutY="43.0" prefHeight="30.0" prefWidth="316.0" />
-            <Button fx:id="showfilebutton" layoutX="464.0" layoutY="42.0" mnemonicParsing="false" onAction="#screenShots" prefHeight="30.0" prefWidth="59.0" text="浏览" />
+            <Button fx:id="showFileButton" layoutX="464.0" layoutY="42.0" mnemonicParsing="false" onAction="#showFile" prefHeight="30.0" prefWidth="59.0" text="浏览" />
+            <Label layoutX="60.0" layoutY="263.0" text="分辨率：" />
          </children>
       </Pane>
-      <ChoiceBox layoutX="129.0" layoutY="118.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="formatChoiceBox" layoutX="129.0" layoutY="118.0" prefWidth="150.0" />
       <Label layoutX="51.0" layoutY="123.0" text="视频格式：" />
       <Label layoutX="52.0" layoutY="193.0" text="视频帧率：" />
-      <ChoiceBox layoutX="130.0" layoutY="188.0" prefWidth="150.0" />
-      <ChoiceBox layoutX="130.0" layoutY="258.0" prefWidth="150.0" />
-      <Label layoutX="67.0" layoutY="263.0" text="分辨率：" />
+      <ChoiceBox fx:id="frameChoiceBox" layoutX="130.0" layoutY="188.0" prefWidth="150.0" />
+      <ChoiceBox fx:id="resolutionChoiceBox" layoutX="130.0" layoutY="258.0" prefWidth="150.0" />
    </children>
 </AnchorPane>

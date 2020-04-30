@@ -29,7 +29,8 @@ public class VideoRecord {
     //获取屏幕尺寸
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 
-    private final Rectangle rectangle = new Rectangle(screenSize.width, screenSize.height); // 截屏的大小
+//    private final Rectangle rectangle = new Rectangle(screenSize.width, screenSize.height); // 截屏的大小
+    private final Rectangle rectangle = new Rectangle(1920, 1080); // 截屏的大小
     //视频类 FFmpegFrameRecorder
     private FFmpegFrameRecorder recorder;
     private Robot robot;
@@ -46,7 +47,8 @@ public class VideoRecord {
 
     public VideoRecord(String fileName, boolean isHaveDevice) {
         // TODO Auto-generated constructor stub
-        recorder = new FFmpegFrameRecorder(fileName + ".flv",screenSize.width, screenSize.height);
+//        recorder = new FFmpegFrameRecorder(fileName + ".flv",screenSize.width, screenSize.height);
+        recorder = new FFmpegFrameRecorder(fileName + ".flv",1920, 1080);
         // recorder.setVideoCodec(avcodec.AV_CODEC_ID_H265); // 28
         // recorder.setVideoCodec(avcodec.AV_CODEC_ID_FLV1); // 28
         recorder.setVideoCodec(avcodec.AV_CODEC_ID_H264);
@@ -64,6 +66,10 @@ public class VideoRecord {
         recorder.setVideoOption("preset", "slow");
         recorder.setVideoQuality(0);
         recorder.setVideoOption("crf", "25");
+
+//        设置分辨率
+        recorder.setImageWidth(800);
+        recorder.setImageHeight(600);
 
         // 2000 kb/s, 720P视频的合理比特率范围
         recorder.setVideoBitrate(2000000);
@@ -147,7 +153,7 @@ public class VideoRecord {
         // 截屏
         BufferedImage screenCapture = robot.createScreenCapture(rectangle);
         // 声明一个BufferedImage用重绘截图
-        BufferedImage videoImg = new BufferedImage(screenSize.width, screenSize.height,
+        BufferedImage videoImg = new BufferedImage(1920,1080,
                 BufferedImage.TYPE_3BYTE_BGR);
         // 创建videoImg的Graphics2D
         Graphics2D videoGraphics = videoImg.createGraphics();

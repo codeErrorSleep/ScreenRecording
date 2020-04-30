@@ -13,6 +13,7 @@ import javafx.util.Duration;
 import org.openjfx.domain.Audio;
 import org.openjfx.domain.Video;
 import org.openjfx.service.CaptureScreen;
+import org.openjfx.service.SettingUtils;
 import org.openjfx.service.VideoRecording;
 
 import java.awt.image.BufferedImage;
@@ -26,12 +27,15 @@ import java.time.LocalTime;
 * @Author:         qiuShao
 * @CreateDate:     20-4-19 下午9:39
 */
-public class MainPaneControler {
+public class MainPaneController {
 
 //  视频设置类
     private Video video;
 //  音频设置类
     private Audio audio;
+//  设置类
+    private SettingUtils settingUtils;
+
 //　录制实例
     private VideoRecording videoRecording;
 //  时间线控件(计算时间差)
@@ -40,7 +44,6 @@ public class MainPaneControler {
     //    判断是否打开麦克风标志
     private boolean isMicroPhone=false;
 
-//    private CaptureScreen captureScreen;
 
 
 
@@ -114,10 +117,12 @@ public class MainPaneControler {
             computationTime(true);
             recordingButton.setText("正在录制");
 //            新建视频音频属性类
-            video=new Video();
-            audio=new Audio();
+            settingUtils=new SettingUtils();
+            settingUtils.checkJsonFile();
+            video=settingUtils.readVidioJSON();
+            audio=settingUtils.readAudioJSON();
 
-//            System.out.println(video.getFileName());
+
             videoRecording=new VideoRecording(video,audio, isMicroPhone);
             videoRecording.start();
 
