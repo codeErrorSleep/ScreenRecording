@@ -45,8 +45,9 @@ public class MainPaneController {
     private boolean isMicroPhone=false;
 
 
-
-
+    //跳转设置界面
+    @FXML
+    private Button closeButton;
 //    录制按钮
     @FXML
     private ToggleButton recordingButton;
@@ -159,6 +160,13 @@ public class MainPaneController {
             microPhoneButton.setText("麦克风");
         }
 
+    }
+
+
+    @FXML
+    private void closePane(ActionEvent event) throws IOException {
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        stage.close();
     }
 
 

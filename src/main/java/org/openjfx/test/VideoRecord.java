@@ -48,7 +48,11 @@ public class VideoRecord {
     public VideoRecord(String fileName, boolean isHaveDevice) {
         // TODO Auto-generated constructor stub
 //        recorder = new FFmpegFrameRecorder(fileName + ".flv",screenSize.width, screenSize.height);
-        recorder = new FFmpegFrameRecorder(fileName + ".flv",1920, 1080);
+//        recorder = new FFmpegFrameRecorder(fileName + ".flv",1920, 1080);
+
+        recorder = new FFmpegFrameRecorder("/home/father/Downloads/test1"+ ".flv",1920, 1080);
+
+
         // recorder.setVideoCodec(avcodec.AV_CODEC_ID_H265); // 28
         // recorder.setVideoCodec(avcodec.AV_CODEC_ID_FLV1); // 28
         recorder.setVideoCodec(avcodec.AV_CODEC_ID_H264);
@@ -130,7 +134,6 @@ public class VideoRecord {
                     caputre();
                 }
             }).start();
-
         }
 
         // 录屏

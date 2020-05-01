@@ -54,6 +54,7 @@ public class VideoRecording {
         /**
          * 视频设置
          */
+        System.out.println(video.getSavePath());
 //        视频属性设置
         recorder = new FFmpegFrameRecorder(video.getSavePath(), screenSize.width, screenSize.height);
 //        视频编码格式e

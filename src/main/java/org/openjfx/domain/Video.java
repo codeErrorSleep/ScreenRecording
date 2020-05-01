@@ -39,16 +39,11 @@ public class Video {
     public Video() {
         videoWidth = 1920;
         videoHeigth = 1080;
-        savePath = "outputVideo/";
 //        处理保存的时间
         fileName = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss").format(LocalDateTime.now());
-
-
-        savePath = fileName + ".flv";
-
+        savePath="";
         saveFormat = "flv";
         frameRate = 25;
-
     }
 
 
@@ -114,11 +109,18 @@ public class Video {
     }
 
     public String getSavePath() {
-        savePath=fileName + "."+saveFormat;
+
+//        savePath=savePath+"/"+fileName + "."+saveFormat;
         return savePath;
     }
 
     public void setSavePath(String savePath) {
+        if ("".equals(savePath)){
+            savePath=fileName + "."+saveFormat;
+        }
+//        else{
+//            savePath=savePath+"/"+fileName + "."+saveFormat;
+//        }
         this.savePath = savePath;
     }
 }

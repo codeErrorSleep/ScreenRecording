@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -16,40 +18,115 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.Pane?>
 
-<FlowPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="189.0" prefWidth="775.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.controller.MainPaneController">
+<AnchorPane prefHeight="262.0" prefWidth="1006.0" style="-fx-background-radius: 20;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.controller.MainPaneController">
    <children>
-      <MenuBar cache="true" prefHeight="32.0" prefWidth="775.0" styleClass="primaryStage.initStyle(StageStyle.UNDECORATED);">
-        <menus>
-          <Menu mnemonicParsing="false" text="文件">
-               <items>
-                  <MenuItem fx:id="settingPane" mnemonicParsing="false" onAction="#getSettingPane" text="设置" />
-               </items></Menu>
-        </menus>
-      </MenuBar>
-      <Label alignment="CENTER" prefHeight="18.0" prefWidth="62.0" text="屏幕音量" />
-      <Slider orientation="VERTICAL" prefHeight="136.0" prefWidth="35.0">
-         <opaqueInsets>
-            <Insets />
-         </opaqueInsets>
-      </Slider>
-      <ToggleButton fx:id="microPhoneButton" mnemonicParsing="false" onAction="#isOpenMicroPhone" prefHeight="57.0" prefWidth="95.0" text="麦克风">
-         <FlowPane.margin>
-            <Insets right="10.0" />
-         </FlowPane.margin>
-      </ToggleButton>
-      <ComboBox prefHeight="31.0" prefWidth="160.0" promptText="分辨率" />
-      <Pane prefHeight="140.0" prefWidth="127.0">
+      <Pane prefHeight="272.0" prefWidth="1006.0" style="-fx-background-radius: 20;">
          <children>
-            <Label alignment="CENTER" layoutX="2.0" layoutY="33.0" prefHeight="41.0" prefWidth="125.0" text="录制时间" />
-            <Label fx:id="timeLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="5.0" layoutY="74.0" prefHeight="41.0" prefWidth="119.0" text="0:00:00" textAlignment="CENTER" />
-         </children>
-      </Pane>
-      <ToggleButton fx:id="recordingButton" mnemonicParsing="false" onAction="#startRecording" prefHeight="72.0" prefWidth="125.0" text="录制" />
-      <Pane prefHeight="148.0" prefWidth="139.0">
-         <children>
-            <Button layoutX="24.0" layoutY="25.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="91.0" text="暂停" />
-            <Button fx:id="screenShotsButton" layoutX="24.0" layoutY="87.0" mnemonicParsing="false" onAction="#screenShots" prefHeight="41.0" prefWidth="91.0" text="截图" />
+            <Pane layoutY="-6.0" prefHeight="280.0" prefWidth="159.0" style="-fx-background-color: #8EA1B1;">
+               <children>
+                  <ToggleButton fx:id="recordingButton" layoutX="39.0" layoutY="91.0" mnemonicParsing="false" onAction="#startRecording" prefHeight="49.0" prefWidth="82.0" style="-fx-background-radius: 15;">
+                     <graphic>
+                        <ImageView fitHeight="39.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Buttonphoto/recording.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </ToggleButton>
+                  <Pane layoutX="12.0" layoutY="168.0" prefHeight="50.0" prefWidth="135.0">
+                     <children>
+                        <Label fx:id="timeLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="4.0" layoutY="7.0" prefHeight="47.0" prefWidth="127.0" text="0:00:00" textAlignment="CENTER">
+                           <font>
+                              <Font size="36.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </Pane>
+               </children>
+            </Pane>
+            <Pane layoutX="159.0" layoutY="-6.0" prefHeight="280.0" prefWidth="850.0" style="-fx-background-color: #8F9E8C;">
+               <children>
+                  <Button fx:id="StopButton" layoutX="213.0" layoutY="108.0" mnemonicParsing="false" prefHeight="85.0" prefWidth="82.0">
+                     <graphic>
+                        <ImageView fitHeight="71.0" fitWidth="77.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Buttonphoto/pause.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button fx:id="screenShotsButton" layoutX="350.0" layoutY="114.0" mnemonicParsing="false" onAction="#screenShots" prefHeight="50.0" prefWidth="59.0">
+                     <graphic>
+                        <ImageView fitHeight="63.0" fitWidth="118.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Buttonphoto/screenshots.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Slider layoutX="43.0" layoutY="64.0" orientation="VERTICAL" prefHeight="139.0" prefWidth="17.0" />
+                  <Slider layoutX="135.0" layoutY="59.0" orientation="VERTICAL" prefHeight="139.0" prefWidth="17.0" />
+                  <Button layoutX="503.0" layoutY="108.0" mnemonicParsing="false" prefHeight="85.0" prefWidth="91.0">
+                     <graphic>
+                        <ImageView fitHeight="70.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Buttonphoto/camera.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button layoutX="670.0" layoutY="108.0" mnemonicParsing="false" prefHeight="85.0" prefWidth="82.0">
+                     <graphic>
+                        <ImageView fitHeight="62.0" fitWidth="83.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Buttonphoto/file.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <ToggleButton layoutX="25.0" layoutY="214.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="62.0">
+                     <graphic>
+                        <ImageView fitHeight="32.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Buttonphoto/volume.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </ToggleButton>
+                  <ToggleButton layoutX="123.0" layoutY="213.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="54.0">
+                     <graphic>
+                        <ImageView fitHeight="33.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../Buttonphoto/microphone.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </ToggleButton>
+                  <Pane prefHeight="47.0" prefWidth="850.0" style="-fx-background-color: #FFFFB9; -fx-background-radius: 0 0 20 20;">
+                     <children>
+                        <Button fx:id="SettingButton" layoutX="737.0" layoutY="3.0" mnemonicParsing="false" onAction="#getSettingPane" prefHeight="31.0" prefWidth="30.0" style="-fx-background-color: #FFFFB9;">
+                           <graphic>
+                              <ImageView fitHeight="33.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../Buttonphoto/setting.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="closeButton" layoutX="790.0" layoutY="6.0" mnemonicParsing="false" onAction="#closePane" style="-fx-background-color: #FFFFB9;">
+                           <graphic>
+                              <ImageView fitHeight="26.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@../../Buttonphoto/close.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </Pane>
+               </children>
+            </Pane>
          </children>
       </Pane>
    </children>
-</FlowPane>
+</AnchorPane>

@@ -11,7 +11,7 @@
    <children>
       <Pane layoutX="254.0" layoutY="539.0" prefHeight="60.0" prefWidth="294.0" AnchorPane.bottomAnchor="11.0" AnchorPane.rightAnchor="0.0">
          <children>
-            <Button layoutX="80.0" layoutY="18.0" mnemonicParsing="false" text="恢复默认值" />
+            <Button fx:id="recoverButton" layoutX="80.0" layoutY="18.0" mnemonicParsing="false" onAction="#recover" text="恢复默认值" />
             <Button fx:id="saveSettingButton" layoutX="216.0" layoutY="19.0" mnemonicParsing="false" onAction="#saveSetting" prefHeight="30.0" prefWidth="59.0" text="保存" />
          </children>
       </Pane>
