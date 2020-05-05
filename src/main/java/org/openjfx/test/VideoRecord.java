@@ -24,7 +24,7 @@ import org.bytedeco.javacv.Java2DFrameConverter;
  *
  */
 public class VideoRecord {
-    //线程池 screenTimer
+    //录屏线程池 screenTimer
     private ScheduledThreadPoolExecutor screenTimer;
     //获取屏幕尺寸
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -34,7 +34,7 @@ public class VideoRecord {
     //视频类 FFmpegFrameRecorder
     private FFmpegFrameRecorder recorder;
     private Robot robot;
-    //线程池 exec
+    //音频线程池 exec
     private ScheduledThreadPoolExecutor exec;
     private TargetDataLine line;
     private AudioFormat audioFormat;
@@ -50,7 +50,7 @@ public class VideoRecord {
 //        recorder = new FFmpegFrameRecorder(fileName + ".flv",screenSize.width, screenSize.height);
 //        recorder = new FFmpegFrameRecorder(fileName + ".flv",1920, 1080);
 
-        recorder = new FFmpegFrameRecorder("/home/father/Downloads/test1"+ ".flv",1920, 1080);
+        recorder = new FFmpegFrameRecorder("test.flv",1920, 1080);
 
 
         // recorder.setVideoCodec(avcodec.AV_CODEC_ID_H265); // 28
@@ -98,6 +98,15 @@ public class VideoRecord {
         // 音频编/解码器
         recorder.setAudioCodec(avcodec.AV_CODEC_ID_AAC);
 
+
+        this.isHaveDevice = isHaveDevice;
+    }
+
+    /**
+     * 开始录制
+     */
+    public void start() {
+
         try {
             robot = new Robot();
         } catch (AWTException e) {
@@ -110,13 +119,7 @@ public class VideoRecord {
             // TODO Auto-generated catch block
             System.out.print("*******************************");
         }
-        this.isHaveDevice = isHaveDevice;
-    }
 
-    /**
-     * 开始录制
-     */
-    public void start() {
 
         if (startTime == 0) {
             startTime = System.currentTimeMillis();

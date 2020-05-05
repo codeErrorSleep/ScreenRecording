@@ -46,7 +46,7 @@
             </Pane>
             <Pane layoutX="159.0" layoutY="-6.0" prefHeight="280.0" prefWidth="850.0" style="-fx-background-color: #8F9E8C;">
                <children>
-                  <Button fx:id="StopButton" layoutX="213.0" layoutY="108.0" mnemonicParsing="false" prefHeight="85.0" prefWidth="82.0">
+                  <Button fx:id="StopButton" layoutX="213.0" layoutY="108.0" mnemonicParsing="false" prefHeight="85.0" prefWidth="82.0" styleClass="button4" stylesheets="@css/buttonattend.css">
                      <graphic>
                         <ImageView fitHeight="71.0" fitWidth="77.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -55,7 +55,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="screenShotsButton" layoutX="350.0" layoutY="114.0" mnemonicParsing="false" onAction="#screenShots" prefHeight="50.0" prefWidth="59.0">
+                  <Button fx:id="screenShotsButton" layoutX="350.0" layoutY="114.0" mnemonicParsing="false" onAction="#screenShots" prefHeight="50.0" prefWidth="59.0" styleClass="button2" stylesheets="@css/buttonattend.css">
                      <graphic>
                         <ImageView fitHeight="63.0" fitWidth="118.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -66,7 +66,7 @@
                   </Button>
                   <Slider layoutX="43.0" layoutY="64.0" orientation="VERTICAL" prefHeight="139.0" prefWidth="17.0" />
                   <Slider layoutX="135.0" layoutY="59.0" orientation="VERTICAL" prefHeight="139.0" prefWidth="17.0" />
-                  <Button layoutX="503.0" layoutY="108.0" mnemonicParsing="false" prefHeight="85.0" prefWidth="91.0">
+                  <Button layoutX="503.0" layoutY="108.0" mnemonicParsing="false" prefHeight="85.0" prefWidth="91.0" styleClass="button2" stylesheets="@css/buttonattend.css">
                      <graphic>
                         <ImageView fitHeight="70.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -75,7 +75,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button layoutX="670.0" layoutY="108.0" mnemonicParsing="false" prefHeight="85.0" prefWidth="82.0">
+                  <Button layoutX="670.0" layoutY="108.0" mnemonicParsing="false" prefHeight="85.0" prefWidth="82.0" styleClass="button3" stylesheets="@css/buttonattend.css">
                      <graphic>
                         <ImageView fitHeight="62.0" fitWidth="83.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -104,7 +104,7 @@
                   </ToggleButton>
                   <Pane prefHeight="47.0" prefWidth="850.0" style="-fx-background-color: #FFFFB9; -fx-background-radius: 0 0 20 20;">
                      <children>
-                        <Button fx:id="SettingButton" layoutX="737.0" layoutY="3.0" mnemonicParsing="false" onAction="#getSettingPane" prefHeight="31.0" prefWidth="30.0" style="-fx-background-color: #FFFFB9;">
+                        <Button fx:id="SettingButton" layoutX="737.0" layoutY="3.0" mnemonicParsing="false" onAction="#getSettingPane" prefHeight="31.0" prefWidth="30.0" styleClass="button2" stylesheets="@css/buttonattend.css">
                            <graphic>
                               <ImageView fitHeight="33.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -113,7 +113,7 @@
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="closeButton" layoutX="790.0" layoutY="6.0" mnemonicParsing="false" onAction="#closePane" style="-fx-background-color: #FFFFB9;">
+                        <Button fx:id="closeButton" layoutX="790.0" layoutY="6.0" mnemonicParsing="false" onAction="#closePane" styleClass="button2" stylesheets="@css/buttonattend.css">
                            <graphic>
                               <ImageView fitHeight="26.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                                  <image>

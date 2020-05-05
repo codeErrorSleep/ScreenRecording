@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 * @CreateDate:     20-4-12 下午2:40
 */
 public class VideoRecording {
-    //线程池 screenTimer
+    //录屏线程池 screenTimer
     private ScheduledThreadPoolExecutor screenTimer;
     //获取屏幕尺寸
 //    private Rectangle rectangle; // 截屏的大小
@@ -37,7 +37,7 @@ public class VideoRecording {
 //音频类
     private AudioFormat audioFormat;
     private Robot robot;
-    //线程池 exec
+    //音频线程池 exec
     private ScheduledThreadPoolExecutor exec;
     private TargetDataLine line;
     private DataLine.Info dataLineInfo;
@@ -198,7 +198,11 @@ public class VideoRecording {
 
     }
 
-
+    /**
+    * 录制音频
+    * @author      qiushao
+    * @date        20-5-5 上午9:19
+    */
     public void caputre() {
         audioFormat = new AudioFormat(44100.0F, 16, 2, true, false);
         // 通过AudioSystem获取本地音频混合器信息
