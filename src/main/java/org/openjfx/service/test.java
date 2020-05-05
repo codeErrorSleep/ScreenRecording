@@ -1,12 +1,26 @@
 package org.openjfx.service;
 
+import org.openjfx.domain.Audio;
+import org.openjfx.domain.Video;
+
 import java.util.Scanner;
 
 public class test {
 
+
     public static void main(String[] args)  {
-        CameraRecording cameraRecording=new CameraRecording("test3",1920,1080,25);
+//        CameraRecording cameraRecording=new CameraRecording("test3",1920,1080,25);
 //        Loader.load(opencv_objdetect.class);
+
+        SettingUtils settingUtils=new SettingUtils();
+        settingUtils.checkJsonFile();
+        Video video=settingUtils.readVidioJSON();
+        Audio audio=settingUtils.readAudioJSON();
+
+        CameraRecording cameraRecording=new CameraRecording(video,audio);
+//        CameraRecording cameraRecording=new CameraRecording("out.flv",640,480,5);
+
+
         try{
             cameraRecording.start();
         }catch (Exception e)

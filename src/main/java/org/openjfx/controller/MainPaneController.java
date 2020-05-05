@@ -12,6 +12,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.openjfx.domain.Audio;
 import org.openjfx.domain.Video;
+import org.openjfx.service.CameraRecording;
 import org.openjfx.service.CaptureScreen;
 import org.openjfx.service.SettingUtils;
 import org.openjfx.service.VideoRecording;
@@ -36,8 +37,12 @@ public class MainPaneController {
 //  设置类
     private SettingUtils settingUtils;
 
-//　录制实例
+//　录制屏幕实例
     private VideoRecording videoRecording;
+//    录制摄像头实例
+    private CameraRecording cameraRecording;
+
+
 //  时间线控件(计算时间差)
     private Timeline timeline;
 
@@ -116,13 +121,11 @@ public class MainPaneController {
         if (recordingButton.isSelected()){
 //            计算时间差
             computationTime(true);
-            recordingButton.setText("正在录制");
 //            新建视频音频属性类
             settingUtils=new SettingUtils();
             settingUtils.checkJsonFile();
             video=settingUtils.readVidioJSON();
             audio=settingUtils.readAudioJSON();
-
 
             videoRecording=new VideoRecording(video,audio, isMicroPhone);
             videoRecording.start();
@@ -130,10 +133,30 @@ public class MainPaneController {
         }else{
 //            停止计算
             computationTime(false);
-            recordingButton.setText("录制");
             videoRecording.stop();
         }
     }
+
+
+    /**
+    * 摄像头录制
+    * @author      qiushao
+    * @date        20-5-5 上午11:29
+    */
+    public void startCameraRecording(){
+//            计算时间差
+        computationTime(true);
+//            新建视频音频属性类
+        settingUtils=new SettingUtils();
+        settingUtils.checkJsonFile();
+        video=settingUtils.readVidioJSON();
+        audio=settingUtils.readAudioJSON();
+
+//        cameraRecording=new CameraRecording(video,audio);
+
+
+    }
+
 
 
 //跳转设置界面

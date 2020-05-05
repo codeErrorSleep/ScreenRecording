@@ -34,7 +34,7 @@ public class VideoRecording {
 
     //视频类 FFmpegFrameRecorder
     private FFmpegFrameRecorder recorder;
-//音频类
+//  音频类
     private AudioFormat audioFormat;
     private Robot robot;
     //音频线程池 exec
@@ -287,7 +287,6 @@ public class VideoRecording {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-
     }
 
 

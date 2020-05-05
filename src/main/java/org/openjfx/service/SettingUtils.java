@@ -9,6 +9,8 @@ import org.openjfx.domain.Video;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 
 /**
@@ -66,6 +68,9 @@ public class SettingUtils {
         try {
             ObjectMapper mapper = new ObjectMapper();
             video = mapper.readValue(new File("videoSetting.json"), Video.class);
+//            重新设置视频名
+            video.setFileName(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss").format(LocalDateTime.now()));
+
         } catch (Exception e) {
             e.printStackTrace();
         }

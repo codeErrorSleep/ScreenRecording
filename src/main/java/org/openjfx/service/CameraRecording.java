@@ -5,11 +5,15 @@ import org.bytedeco.javacv.CanvasFrame;
 import org.bytedeco.javacv.FFmpegFrameRecorder;
 import org.bytedeco.javacv.Frame;
 import org.bytedeco.javacv.OpenCVFrameGrabber;
+import org.openjfx.domain.Audio;
+import org.openjfx.domain.Video;
 
 import javax.sound.sampled.*;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.ShortBuffer;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -17,15 +21,15 @@ import java.util.concurrent.TimeUnit;
 
 
 /**
-* @Description:    录制摄像头
-* @Author:         qiuShao
-* @CreateDate:     20-5-4 下午8:44
-*/
+ * @Description:    录制摄像头
+ * @Author:         qiuShao
+ * @CreateDate:     20-5-4 下午8:44
+ */
 public class CameraRecording {
 
     //录屏线程池 screenTimer
     private ScheduledThreadPoolExecutor screenTimer;
-//    音频设置线程池
+    //    音频设置线程池
     private ScheduledThreadPoolExecutor exec;
     private long startTime = 0;
     private long videoTS = 0;
@@ -35,30 +39,41 @@ public class CameraRecording {
     //    音频设备指标
     private int AUDIO_DEVICE_INDEX=4;
 
-//  帧率
+    //    录制分辨率
+    private int captureWidth=640;
+    private int captureHeight=480;
+
+    //  帧率
     private int frameRate=5;
-//  摄像头显示
+    //  摄像头显示
     CanvasFrame cFrame;
-//    摄像头的录制类
+    //    摄像头的录制类
     OpenCVFrameGrabber grabber;
-//    录像的实体类
+    //    录像的实体类
     FFmpegFrameRecorder recorder;
-//  音频设置类
+    //  音频设置类
     AudioFormat audioFormat;
 
 
     /**
-    * 初始化视频参数
-    * @author      qiushao
-    * @date        20-5-5 上午10:51
-    */
-    public CameraRecording(String outputFile, int captureWidth, int captureHeight, int frameRate) {
+     * 初始化视频参数
+     * @author      qiushao
+     * @date        20-5-5 上午10:51
+     */
+    public CameraRecording(Video video, Audio audio) {
+
+//        设置分辨率
+        captureWidth=video.getVideoWidth();
+        captureHeight=video.getVideoHeigth();
+//      设置帧率
+        frameRate=(int) video.getFrameRate();
+
 
         grabber = new OpenCVFrameGrabber(WEBCAM_DEVICE_INDEX);
         grabber.setImageWidth(captureWidth);
         grabber.setImageHeight(captureHeight);
-
-        recorder = new FFmpegFrameRecorder(outputFile, captureWidth, captureHeight, 2);
+//        recorder = new FFmpegFrameRecorder(video.getSavePath(), captureWidth, captureHeight, 2);
+        recorder = new FFmpegFrameRecorder(video.getSavePath(), captureWidth, captureHeight, 2);
         recorder.setInterleaved(true);
         recorder.setVideoOption("tune", "zerolatency");
         recorder.setVideoOption("preset", "ultrafast");
@@ -68,11 +83,16 @@ public class CameraRecording {
         // h264编/解码器
         recorder.setVideoCodec(avcodec.AV_CODEC_ID_H264);
         // 封装格式flv
-        recorder.setFormat("flv");
+        recorder.setFormat(video.getSaveFormat());
         // 视频帧率(保证视频质量的情况下最低25，低于25会出现闪屏)
         recorder.setFrameRate(frameRate);
         // 关键帧间隔，一般与帧率相同或者是视频帧率的两倍
         recorder.setGopSize(frameRate * 2);
+        // 不可变(固定)音频比特率
+        recorder.setAudioOption("crf", "0");
+        /**
+         * 音频设置
+         */
         // 不可变(固定)音频比特率
         recorder.setAudioOption("crf", "0");
         // 最高质量
@@ -86,16 +106,15 @@ public class CameraRecording {
         // 音频编/解码器
         recorder.setAudioCodec(avcodec.AV_CODEC_ID_AAC);
 
-
     }
 
 
 
     /**
-    * 录制音频
-    * @author      qiushao
-    * @date        20-5-5 上午9:42
-    */
+     * 录制音频
+     * @author      qiushao
+     * @date        20-5-5 上午9:42
+     */
     public void caputre(){
         /**
          * 设置音频编码器 最好是系统支持的格式，否则getLine() 会发生错误
@@ -159,10 +178,10 @@ public class CameraRecording {
 
 
     /**
-    * 处理每一针的画面
-    * @author      qiushao
-    * @date        20-5-5 上午9:55
-    */
+     * 处理每一针的画面
+     * @author      qiushao
+     * @date        20-5-5 上午9:55
+     */
     public void dealImage() throws org.bytedeco.javacv.FrameGrabber.Exception {
 //        摄像头显示
         // javaCV提供了优化非常好的硬件加速组件来帮助显示我们抓取的摄像头视频
@@ -209,6 +228,7 @@ public class CameraRecording {
 //        开始录制
         System.out.println("开始录制...");
         try {
+            grabber.start();
             recorder.start();
         } catch (Exception e) {
             System.out.println(e);
@@ -265,9 +285,9 @@ public class CameraRecording {
 
             }
             if(null!=recorder){
-            grabber.stop();
-            grabber.release();
-            grabber.close();
+                grabber.stop();
+                grabber.release();
+                grabber.close();
             }
             audioFormat = null;
 

@@ -17,31 +17,35 @@
 //
 //
 ///**
-//* @Description:    备份摄像头
-//* @Author:         qiuShao
-//* @CreateDate:     20-5-4 下午8:57
-//*/
-//
-//
+// * @Description:    录制摄像头
+// * @Author:         qiuShao
+// * @CreateDate:     20-5-4 下午8:44
+// */
 //public class CameraRecording {
 //
+//    long startTime = 0;
+//    long videoTS = 0;
+//
+//    //    摄像头设备指标
+//    int WEBCAM_DEVICE_INDEX=0;
+//    //    音频设备指标
+//    int AUDIO_DEVICE_INDEX=4;
+//
+//    //  帧率
+//    int FRAME_RATE=5;
+//    //  摄像头显示
+//    CanvasFrame cFrame;
+//    //    摄像头的录制类
+//    OpenCVFrameGrabber grabber;
+//    //    录像的实体类
+//    FFmpegFrameRecorder recorder;
 //
 //
+//    public CameraRecording(String outputFile, int captureWidth, int captureHeight, int FRAME_RATE)
+//    {
 //
 //
-//    public static void CameraRecording(String outputFile, int captureWidth, int captureHeight, int FRAME_RATE)
-//            throws org.bytedeco.javacv.FrameGrabber.Exception {
-//
-//        long startTime = 0;
-//        long videoTS = 0;
-//
-//        //    摄像头设备指标
-//        int WEBCAM_DEVICE_INDEX=0;
-//        //    音频设备指标
-//        int AUDIO_DEVICE_INDEX=4;
-//
-//
-//        OpenCVFrameGrabber grabber = new OpenCVFrameGrabber(WEBCAM_DEVICE_INDEX);
+//        grabber = new OpenCVFrameGrabber(WEBCAM_DEVICE_INDEX);
 //        grabber.setImageWidth(captureWidth);
 //        grabber.setImageHeight(captureHeight);
 //        System.out.println("开始抓取摄像头...");
@@ -79,7 +83,7 @@
 //        }
 //
 //
-//        FFmpegFrameRecorder recorder = new FFmpegFrameRecorder(outputFile, captureWidth, captureHeight, 2);
+//        recorder = new FFmpegFrameRecorder(outputFile, captureWidth, captureHeight, 2);
 //        recorder.setInterleaved(true);
 //        recorder.setVideoOption("tune", "zerolatency");
 //        recorder.setVideoOption("preset", "ultrafast");
@@ -106,98 +110,91 @@
 //        recorder.setAudioChannels(2);
 //        // 音频编/解码器
 //        recorder.setAudioCodec(avcodec.AV_CODEC_ID_AAC);
-//        System.out.println("开始录制...");
 //
+//
+//
+//    }
+//
+//
+//
+//    /**
+//     * 录制音频
+//     * @author      qiushao
+//     * @date        20-5-5 上午9:42
+//     */
+//    public void caputre(){
+//        /**
+//         * 设置音频编码器 最好是系统支持的格式，否则getLine() 会发生错误
+//         * 采样率:44.1k;采样率位数:16位;立体声(stereo);是否签名;true:
+//         * big-endian字节顺序,false:little-endian字节顺序(详见:ByteOrder类)
+//         */
+//        AudioFormat audioFormat = new AudioFormat(44100.0F, 16, 2, true, false);
+//
+//        // 通过AudioSystem获取本地音频混合器信息
+//        Mixer.Info[] minfoSet = AudioSystem.getMixerInfo();
+//        // 通过AudioSystem获取本地音频混合器
+//        Mixer mixer = AudioSystem.getMixer(minfoSet[AUDIO_DEVICE_INDEX]);
+//        // 通过设置好的音频编解码器获取数据线信息
+//        DataLine.Info dataLineInfo = new DataLine.Info(TargetDataLine.class, audioFormat);
 //        try {
-//            recorder.start();
-//        } catch (org.bytedeco.javacv.FrameRecorder.Exception e2) {
-//            if (recorder != null) {
-//                System.out.println("关闭失败，尝试重启");
-//                try {
-//                    recorder.stop();
-//                    recorder.start();
-//                } catch (org.bytedeco.javacv.FrameRecorder.Exception e) {
+//            // 打开并开始捕获音频
+//            // 通过line可以获得更多控制权
+//            // 获取设备：TargetDataLine line
+//            // =(TargetDataLine)mixer.getLine(dataLineInfo);
+//            TargetDataLine line = (TargetDataLine) AudioSystem.getLine(dataLineInfo);
+//            line.open(audioFormat);
+//            line.start();
+//            // 获得当前音频采样率
+//            int sampleRate = (int) audioFormat.getSampleRate();
+//            // 获取当前音频通道数量
+//            int numChannels = audioFormat.getChannels();
+//            // 初始化音频缓冲区(size是音频采样率*通道数)
+//            int audioBufferSize = sampleRate * numChannels;
+//            byte[] audioBytes = new byte[audioBufferSize];
+//
+//            ScheduledThreadPoolExecutor exec = new ScheduledThreadPoolExecutor(1);
+//            exec.scheduleAtFixedRate(new Runnable() {
+//                @Override
+//                public void run() {
 //                    try {
-//                        System.out.println("开启失败，关闭录制");
-//                        recorder.stop();
-//                        return;
-//                    } catch (org.bytedeco.javacv.FrameRecorder.Exception e1) {
-//                        return;
+//                        // 非阻塞方式读取
+//                        int nBytesRead = line.read(audioBytes, 0, line.available());
+//                        // 因为我们设置的是16位音频格式,所以需要将byte[]转成short[]
+//                        int nSamplesRead = nBytesRead / 2;
+//                        short[] samples = new short[nSamplesRead];
+//                        /**
+//                         * ByteBuffer.wrap(audioBytes)-将byte[]数组包装到缓冲区
+//                         * ByteBuffer.order(ByteOrder)-按little-endian修改字节顺序，解码器定义的
+//                         * ByteBuffer.asShortBuffer()-创建一个新的short[]缓冲区
+//                         * ShortBuffer.get(samples)-将缓冲区里short数据传输到short[]
+//                         */
+//                        ByteBuffer.wrap(audioBytes).order(ByteOrder.LITTLE_ENDIAN).asShortBuffer().get(samples);
+//                        // 将short[]包装到ShortBuffer
+//                        ShortBuffer sBuff = ShortBuffer.wrap(samples, 0, nSamplesRead);
+//                        // 按通道录制shortBuffer
+//                        recorder.recordSamples(sampleRate, numChannels, sBuff);
+//                    } catch (org.bytedeco.javacv.FrameRecorder.Exception e) {
+//                        e.printStackTrace();
 //                    }
 //                }
-//            }
-//
+//            }, 0, (long) 1000 / FRAME_RATE, TimeUnit.MILLISECONDS);
+//        } catch (LineUnavailableException e1) {
+//            e1.printStackTrace();
 //        }
+//    }
 //
 //
-//        // 音频捕获
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                /**
-//                 * 设置音频编码器 最好是系统支持的格式，否则getLine() 会发生错误
-//                 * 采样率:44.1k;采样率位数:16位;立体声(stereo);是否签名;true:
-//                 * big-endian字节顺序,false:little-endian字节顺序(详见:ByteOrder类)
-//                 */
-//                AudioFormat audioFormat = new AudioFormat(44100.0F, 16, 2, true, false);
-//
-//                // 通过AudioSystem获取本地音频混合器信息
-//                Mixer.Info[] minfoSet = AudioSystem.getMixerInfo();
-//                // 通过AudioSystem获取本地音频混合器
-//                Mixer mixer = AudioSystem.getMixer(minfoSet[AUDIO_DEVICE_INDEX]);
-//                // 通过设置好的音频编解码器获取数据线信息
-//                DataLine.Info dataLineInfo = new DataLine.Info(TargetDataLine.class, audioFormat);
-//                try {
-//                    // 打开并开始捕获音频
-//                    // 通过line可以获得更多控制权
-//                    // 获取设备：TargetDataLine line
-//                    // =(TargetDataLine)mixer.getLine(dataLineInfo);
-//                    TargetDataLine line = (TargetDataLine) AudioSystem.getLine(dataLineInfo);
-//                    line.open(audioFormat);
-//                    line.start();
-//                    // 获得当前音频采样率
-//                    int sampleRate = (int) audioFormat.getSampleRate();
-//                    // 获取当前音频通道数量
-//                    int numChannels = audioFormat.getChannels();
-//                    // 初始化音频缓冲区(size是音频采样率*通道数)
-//                    int audioBufferSize = sampleRate * numChannels;
-//                    byte[] audioBytes = new byte[audioBufferSize];
-//
-//                    ScheduledThreadPoolExecutor exec = new ScheduledThreadPoolExecutor(1);
-//                    exec.scheduleAtFixedRate(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            try {
-//                                // 非阻塞方式读取
-//                                int nBytesRead = line.read(audioBytes, 0, line.available());
-//                                // 因为我们设置的是16位音频格式,所以需要将byte[]转成short[]
-//                                int nSamplesRead = nBytesRead / 2;
-//                                short[] samples = new short[nSamplesRead];
-//                                /**
-//                                 * ByteBuffer.wrap(audioBytes)-将byte[]数组包装到缓冲区
-//                                 * ByteBuffer.order(ByteOrder)-按little-endian修改字节顺序，解码器定义的
-//                                 * ByteBuffer.asShortBuffer()-创建一个新的short[]缓冲区
-//                                 * ShortBuffer.get(samples)-将缓冲区里short数据传输到short[]
-//                                 */
-//                                ByteBuffer.wrap(audioBytes).order(ByteOrder.LITTLE_ENDIAN).asShortBuffer().get(samples);
-//                                // 将short[]包装到ShortBuffer
-//                                ShortBuffer sBuff = ShortBuffer.wrap(samples, 0, nSamplesRead);
-//                                // 按通道录制shortBuffer
-//                                recorder.recordSamples(sampleRate, numChannels, sBuff);
-//                            } catch (org.bytedeco.javacv.FrameRecorder.Exception e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
-//                    }, 0, (long) 1000 / FRAME_RATE, TimeUnit.MILLISECONDS);
-//                } catch (LineUnavailableException e1) {
-//                    e1.printStackTrace();
-//                }
-//            }
-//        }).start();
-//
+//    /**
+//     * 处理每一针的画面
+//     * @author      qiushao
+//     * @date        20-5-5 上午9:55
+//     */
+//    public void dealImage() throws org.bytedeco.javacv.FrameGrabber.Exception {
+////        摄像头显示
 //        // javaCV提供了优化非常好的硬件加速组件来帮助显示我们抓取的摄像头视频
-//        CanvasFrame cFrame = new CanvasFrame("Capture Preview", CanvasFrame.getDefaultGamma() / grabber.getGamma());
+//        cFrame = new CanvasFrame("Capture Preview", CanvasFrame.getDefaultGamma() / grabber.getGamma());
 //        Frame capturedFrame = null;
+////        合并图片成视频
 //        // 执行抓取（capture）过程
 //        while ((capturedFrame = grabber.grab()) != null) {
 //            if (cFrame.isVisible()) {
@@ -226,6 +223,48 @@
 //            }
 //        }
 //
+//
+//    }
+//
+//
+//
+//    /**
+//     * 开始录制
+//     */
+//    public void start() {
+////        开始录制
+//        System.out.println("开始录制...");
+//        try {
+//            recorder.start();
+//        } catch (Exception e) {
+//            System.out.println(e);
+//        }
+//        // 如果有录音设备则启动录音线程
+//
+//        new Thread(new Runnable() {
+//
+//            @Override
+//            public void run() {
+//                // TODO Auto-generated method stub
+//                caputre();
+//            }
+//        }).start();
+//
+//        try{
+//            dealImage();
+//        }catch (Exception e){
+//        }
+//
+//    }
+//
+//
+//    /**
+//     * 停止录制
+//     * @author      qiushao
+//     * @date        20-5-5 上午9:58
+//     */
+//    public void stop(){
+//        //        检测关闭
 //        cFrame.dispose();
 //        try {
 //            if (recorder != null) {
@@ -253,13 +292,10 @@
 //
 //
 //
-//
-//
-//
-//
-//    public static void main(String[] args) throws Exception {
-////        Loader.load(opencv_objdetect.class);
-//        CameraRecording(
-//                "test3",640,480,25);
-//    }
+////
+////    public static void main(String[] args) throws Exception {
+//////        Loader.load(opencv_objdetect.class);
+////        CameraRecording(
+////                "test3",640,480,25);
+////    }
 //}

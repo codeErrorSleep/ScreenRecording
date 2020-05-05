@@ -94,8 +94,8 @@ public class SettingPaneController implements Initializable {
 //        设置视频长宽
         video.setWidthAndHeiht(resolutionChoiceBox.getValue().toString());
 //      设置保存文件位置
-        video.setSavePath(videoPath);
-        System.out.println(video.getSavePath());
+        video.setPath(videoPath);
+        System.out.println(video.getPath());
         settingUtils.writeJsonFile(video, audio);
     }
 
@@ -115,7 +115,7 @@ public class SettingPaneController implements Initializable {
         video=settingUtils.readVidioJSON();
         audio=settingUtils.readAudioJSON();
 //        设置文件路径
-        fileText.setText(video.getSavePath());
+        fileText.setText(video.getPath());
     }
 
     /**
@@ -153,7 +153,7 @@ public class SettingPaneController implements Initializable {
         //        设置文件路径
         fileText.setText("");
 //        视频默认设置
-        video.setSavePath("");
+        video.setPath("");
         video.setFrameRate(10);
         video.setVideoHeigth(1080);
         video.setVideoWidth(1920);

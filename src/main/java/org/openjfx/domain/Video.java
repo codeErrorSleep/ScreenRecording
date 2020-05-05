@@ -15,7 +15,7 @@ public class Video {
     private int videoWidth;
     private int videoHeigth;
     /**
-     * 视频保存位置
+     * 最后保存的路径 路径+文件名
      */
     private String savePath;
     /**
@@ -30,6 +30,8 @@ public class Video {
      * 视频帧率
      */
     private double frameRate;
+    /*目录路径*/
+    private String path;
 
     /**
     * 对视频实体类进行初始化
@@ -40,8 +42,8 @@ public class Video {
         videoWidth = 1920;
         videoHeigth = 1080;
 //        处理保存的时间
-        fileName = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss").format(LocalDateTime.now());
         savePath="";
+        path="";
         saveFormat = "flv";
         frameRate = 25;
     }
@@ -109,18 +111,22 @@ public class Video {
     }
 
     public String getSavePath() {
-
-//        savePath=savePath+"/"+fileName + "."+saveFormat;
+//        重新设置文件名
+        fileName = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss").format(LocalDateTime.now());
+        savePath=path+"/"+fileName+"."+saveFormat;
         return savePath;
     }
 
     public void setSavePath(String savePath) {
-        if ("".equals(savePath)){
-            savePath=fileName + "."+saveFormat;
-        }
-//        else{
-//            savePath=savePath+"/"+fileName + "."+saveFormat;
-//        }
-        this.savePath = savePath;
+        this.savePath=savePath;
+    }
+
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 }
