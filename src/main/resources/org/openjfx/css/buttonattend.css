@@ -61,21 +61,21 @@
 }
 
 
-.combo-box
+.combobox1
 {
-    -fx-background-color : #141124;
+    -fx-background-color : #9CAAAA;
     -fx-border-color:  #515658;
     -fx-border-radius: 30;
 }
-.combo-box:hover
+.combobox1:hover
 {
-    -fx-background-color : #141124;
+    -fx-background-color : #9CAAAA;
     -fx-border-color:  #FFFF;
     -fx-border-radius: 30;
 }
-.combo-box:pressed
+.combobox1:pressed
 {
-    -fx-background-color : #141124;
+    -fx-background-color : #9CAAAA;
     -fx-border-color:  #FFFF;
     -fx-border-radius: 30;
 }

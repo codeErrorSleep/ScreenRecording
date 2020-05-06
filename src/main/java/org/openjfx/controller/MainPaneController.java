@@ -24,26 +24,27 @@ import java.time.LocalTime;
 
 
 /**
-* @Description:    主界面控制类
-* @Author:         qiuShao
-* @CreateDate:     20-4-19 下午9:39
-*/
+ * @Description:    主界面控制类
+ * @Author:         qiuShao
+ * @CreateDate:     20-4-19 下午9:39
+ */
 public class MainPaneController {
 
-//  视频设置类
+
+    //  视频设置类
     private Video video;
-//  音频设置类
+    //  音频设置类
     private Audio audio;
-//  设置类
+    //  设置类
     private SettingUtils settingUtils;
 
-//　录制屏幕实例
+    //　录制屏幕实例
     private VideoRecording videoRecording;
-//    录制摄像头实例
+    //    录制摄像头实例
     private CameraRecording cameraRecording;
 
 
-//  时间线控件(计算时间差)
+    //  时间线控件(计算时间差)
     private Timeline timeline;
 
     //    判断是否打开麦克风标志
@@ -53,24 +54,26 @@ public class MainPaneController {
     //跳转设置界面
     @FXML
     private Button closeButton;
-//    录制按钮
+    //    录制按钮
     @FXML
     private ToggleButton recordingButton;
 
-//  选择是否使用麦克风
+    //  选择是否使用麦克风
     @FXML
     private ToggleButton microPhoneButton;
 
-//    时间
+    //    时间
     @FXML
     private Label timeLabel;
 
-//    截图
+    //    截图
     @FXML
     private Button screenShotsButton;
 
+    @FXML
+    private Button SettingButton;
 
-//截图
+    //截图
     @FXML
     private void screenShots(){
         CaptureScreen captureScreen=new CaptureScreen();
@@ -80,11 +83,12 @@ public class MainPaneController {
 
 
 
+
     /**
-    * 计算录制时间
-    * @author      qiushao
-    * @date        20-4-21 下午9:45
-    */
+     * 计算录制时间
+     * @author      qiushao
+     * @date        20-4-21 下午9:45
+     */
     private void computationTime(boolean isRecording){
         if(isRecording){
             LocalTime startTime=LocalTime.now();
@@ -111,10 +115,10 @@ public class MainPaneController {
 
 
     /**
-    * 开始录制函数
-    * @author      qiushao
-    * @date        20-4-21 下午9:48
-    */
+     * 开始录制函数
+     * @author      qiushao
+     * @date        20-4-21 下午9:48
+     */
     @FXML
     private void startRecording(ActionEvent event){
 //        判断是否点击录制按钮８
@@ -139,10 +143,10 @@ public class MainPaneController {
 
 
     /**
-    * 摄像头录制
-    * @author      qiushao
-    * @date        20-5-5 上午11:29
-    */
+     * 摄像头录制
+     * @author      qiushao
+     * @date        20-5-5 上午11:29
+     */
     public void startCameraRecording(){
 //            计算时间差
         computationTime(true);
@@ -158,19 +162,21 @@ public class MainPaneController {
     }
 
 
-
-//跳转设置界面
+    //跳转设置界面
     @FXML
     private void getSettingPane(ActionEvent event) throws IOException {
         SettingPane settingPane=new SettingPane();
         try{
             settingPane.start(new Stage());
+            Stage stage = (Stage) closeButton.getScene().getWindow();
+            stage.hide();
+
         } catch (Exception e){e.printStackTrace();}
 
     }
 
 
-//是否录制麦克风
+    //是否录制麦克风
     @FXML
     private void isOpenMicroPhone(ActionEvent event){
 //       判断是否点击麦克风录制按钮

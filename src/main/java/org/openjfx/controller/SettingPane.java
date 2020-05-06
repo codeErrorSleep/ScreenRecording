@@ -5,39 +5,45 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class SettingPane extends Application {
-
     private static Scene scene;
 
-
-    /**
-     * 初始化设置文件
-     * @author      qiushao
-     * @date        20-4-15 下午10:47
-     */
     @Override
     public void start(Stage stage) throws IOException {
-        scene = new Scene(loadFXML("settingPane"));
 
-        stage.setTitle("设置");
+
+        scene = new Scene(loadFXML("SettingPane"));
+        //隐藏标题
+        stage.initStyle(StageStyle.TRANSPARENT);
         stage.setScene(scene);
+        AtomicReference<Double> xOffSet= new AtomicReference<>((double) 0);
+        AtomicReference<Double> yOffSet= new AtomicReference<>((double) 0);
+
+        scene.setOnMousePressed(event -> {
+            xOffSet.set(event.getSceneX());
+            yOffSet.set(event.getSceneY());
+        });
+
+        scene.setOnMouseDragged(event -> {
+            stage.setX(event.getScreenX() - xOffSet.get());
+            stage.setY(event.getScreenY() - yOffSet.get());
+        });
         stage.show();
 
-
-    }
-
-    private static Parent loadFXML(String fxml) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(MainPane.class.getResource("../"+fxml + ".fxml"));
-        return fxmlLoader.load();
     }
 
     public static void setRoot(String fxml) throws IOException {
         scene.setRoot(loadFXML(fxml));
     }
 
-
-
+    private static Parent loadFXML(String fxml) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(MainPane.class.getResource("../" + fxml + ".fxml"));
+        return fxmlLoader.load();
+    }
 }
+

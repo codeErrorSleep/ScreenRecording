@@ -1,5 +1,6 @@
 package org.openjfx.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -14,6 +15,7 @@ import org.openjfx.domain.Video;
 import org.openjfx.service.SettingUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -32,25 +34,41 @@ public class SettingPaneController implements Initializable {
     @FXML
     private ChoiceBox resolutionChoiceBox;
 
+//    音频选项
+    @FXML
+    private ChoiceBox audioQualityBox;
+    @FXML
+    private ChoiceBox sampleRateBox;
+    @FXML
+    private ChoiceBox audioBitrateBox;
+
     //    保存按钮
     @FXML
     private Button saveSettingButton;
-    /**
-     * 选择文件夹按钮
-     */
+    /* 选择文件夹按钮*/
     @FXML
     private Button showFileButton;
 //恢复默认值
     @FXML
     private Button recoverButton;
+//关闭按钮
+    @FXML
+    private Button closeButton;
 
     //    设置保存类
     private SettingUtils settingUtils;
 
-    //    选项集合
+    // 视频选项集合
     private String[] frames;
     private String[] formats;
     private String[] resolutions;
+//    音频选项卡
+    private String[] audioQualitys;
+    private String[] sampleRates;
+    private String[] audioBitrates;
+
+
+
     private Window stage;
     private Stage primaryStage;
     //  文件路径
@@ -108,7 +126,8 @@ public class SettingPaneController implements Initializable {
      */
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        choiceBoxInitialize();
+        videoBoxInitialize();
+        audioBoxInitialize();
 //      初始化音频视频类
         settingUtils = new SettingUtils();
         settingUtils.checkJsonFile();
@@ -119,11 +138,11 @@ public class SettingPaneController implements Initializable {
     }
 
     /**
-    * 选择框初始化
+    * 视频选择框初始化
     * @author      qiushao
     * @date        20-5-1 下午4:02
     */
-    private void choiceBoxInitialize(){
+    private void videoBoxInitialize(){
         //      初始化选项
         frames = new String[]{"10", "15", "30", "60"};
         formats = new String[]{"flv", "mp4"};
@@ -137,6 +156,30 @@ public class SettingPaneController implements Initializable {
         formatChoiceBox.getSelectionModel().select(0);
         resolutionChoiceBox.getSelectionModel().select(0);
     }
+
+
+    /**
+    * 选择框初始化
+    * @author      qiushao
+    * @date        20-5-5 下午3:48
+    */
+    private void audioBoxInitialize(){
+        //      初始化选项
+        audioQualitys = new String[]{"0","1","2"};
+        sampleRates = new String[]{"192000"};
+        audioBitrates = new String[]{"44100"};
+//      添加到选择框处
+        audioQualityBox.getItems().addAll(audioQualitys);
+        sampleRateBox.getItems().addAll(sampleRates);
+        audioBitrateBox.getItems().addAll(audioBitrates);
+//        设置默认选项
+        audioBitrateBox.getSelectionModel().select(0);
+        sampleRateBox.getSelectionModel().select(0);
+        audioQualityBox.getSelectionModel().select(0);
+
+    }
+
+
 
 
     /**
@@ -160,6 +203,22 @@ public class SettingPaneController implements Initializable {
         video.setSaveFormat("flv");
 
     }
+
+
+
+
+    @FXML
+    private void getmainPane(ActionEvent event) throws IOException {
+        MainPane mainPane=new MainPane();
+        try{
+            mainPane.start(new Stage());
+            Stage stage = (Stage) closeButton.getScene().getWindow();
+            stage.hide();
+
+        } catch (Exception e){e.printStackTrace();}
+
+    }
+
 
 
 }
