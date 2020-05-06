@@ -1,3 +1,6 @@
+
+
+
 .button1
 {
 -fx-background-color : #393351;
@@ -29,7 +32,11 @@
 -fx-background-color : #2F2B43 ;
 -fx-background-radius :  20;
 }
-
+.button2:selected
+{
+-fx-background-color : #FFB199 ;
+-fx-background-radius :  20;
+}
 .button3
 {
     -fx-background-color : #141124;

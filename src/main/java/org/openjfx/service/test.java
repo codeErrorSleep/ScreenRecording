@@ -3,6 +3,7 @@ package org.openjfx.service;
 import org.openjfx.domain.Audio;
 import org.openjfx.domain.Video;
 
+import javax.swing.undo.AbstractUndoableEdit;
 import java.util.Scanner;
 
 public class test {
@@ -16,6 +17,10 @@ public class test {
         settingUtils.checkJsonFile();
         Video video=settingUtils.readVidioJSON();
         Audio audio=settingUtils.readAudioJSON();
+
+//        Video video=new Video();
+//        Audio audio=new Audio();
+//
 
         CameraRecording cameraRecording=new CameraRecording(video,audio);
 //        CameraRecording cameraRecording=new CameraRecording("out.flv",640,480,5);

@@ -21,6 +21,18 @@
             <artifactId>javafx-fxml</artifactId>
             <version>11.0.2</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.openjfx/javafx-media -->
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-media</artifactId>
+            <version>12.0.1</version>
+        </dependency>
+        <dependency>
+        <groupId>org.openjfx</groupId>
+        <artifactId>javafx-graphics</artifactId>
+        <version>12.0.1</version>
+    </dependency>
+
 
         <!--javacv-->
         <dependency>
@@ -39,7 +51,12 @@
             <artifactId>javacv</artifactId>
             <version>1.5.2</version>
         </dependency>
-<!--        日志处理-->
+
+
+
+
+
+        <!--        日志处理-->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>

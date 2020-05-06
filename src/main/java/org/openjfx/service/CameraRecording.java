@@ -73,7 +73,7 @@ public class CameraRecording {
         grabber.setImageWidth(captureWidth);
         grabber.setImageHeight(captureHeight);
 //        recorder = new FFmpegFrameRecorder(video.getSavePath(), captureWidth, captureHeight, 2);
-        recorder = new FFmpegFrameRecorder(video.getSavePath(), captureWidth, captureHeight, 2);
+        recorder = new FFmpegFrameRecorder(video.getFileName(), captureWidth, captureHeight, 2);
         recorder.setInterleaved(true);
         recorder.setVideoOption("tune", "zerolatency");
         recorder.setVideoOption("preset", "ultrafast");

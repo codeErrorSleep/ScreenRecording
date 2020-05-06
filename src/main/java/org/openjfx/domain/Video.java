@@ -113,7 +113,12 @@ public class Video {
     public String getSavePath() {
 //        重新设置文件名
         fileName = DateTimeFormatter.ofPattern("yyyy-MM-dd-HH-mm-ss").format(LocalDateTime.now());
-        savePath=path+"/"+fileName+"."+saveFormat;
+        if("".equals(path)){
+            savePath=fileName+"."+saveFormat;
+        }else{
+            savePath=path+"/"+fileName+"."+saveFormat;
+        }
+
         return savePath;
     }
 

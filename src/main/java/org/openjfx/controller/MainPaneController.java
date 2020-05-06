@@ -73,6 +73,10 @@ public class MainPaneController {
     @FXML
     private Button SettingButton;
 
+//    录制摄像头按钮
+    @FXML
+    private ToggleButton cameraButton;
+
     //截图
     @FXML
     private void screenShots(){
@@ -147,18 +151,24 @@ public class MainPaneController {
      * @author      qiushao
      * @date        20-5-5 上午11:29
      */
+    @FXML
     public void startCameraRecording(){
+        if (cameraButton.isSelected()) {
 //            计算时间差
-        computationTime(true);
+            computationTime(true);
 //            新建视频音频属性类
-        settingUtils=new SettingUtils();
-        settingUtils.checkJsonFile();
-        video=settingUtils.readVidioJSON();
-        audio=settingUtils.readAudioJSON();
+            settingUtils = new SettingUtils();
+            settingUtils.checkJsonFile();
+            video = settingUtils.readVidioJSON();
+            audio = settingUtils.readAudioJSON();
 
-//        cameraRecording=new CameraRecording(video,audio);
-
-
+            cameraRecording = new CameraRecording(video, audio);
+            cameraRecording.start();
+        }else{
+            //            停止计算
+            computationTime(false);
+            cameraRecording.stop();
+        }
     }
 
 
@@ -194,8 +204,14 @@ public class MainPaneController {
 
     @FXML
     private void closePane(ActionEvent event) throws IOException {
-        Stage stage = (Stage) closeButton.getScene().getWindow();
-        stage.close();
+//        Stage stage = (Stage) closeButton.getScene().getWindow();
+//        stage.close();
+
+        PlayerPane playerPane=new PlayerPane();
+        try{
+            playerPane.start(new Stage());
+        } catch (Exception e){e.printStackTrace();}
+
     }
 
 
