@@ -2,6 +2,7 @@ package org.openjfx;
 
 import javafx.application.Application;
 import org.openjfx.controller.MainPane;
+import org.openjfx.test.jietutest;
 
 
 public class Main {
@@ -13,6 +14,9 @@ public class Main {
 
 
         Application.launch(MainPane.class);
+
+//        Application.launch(jietutest.class);
+
 
     }
 

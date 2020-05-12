@@ -31,6 +31,7 @@ import java.time.LocalTime;
 public class MainPaneController {
 
 
+
     //  视频设置类
     private Video video;
     //  音频设置类
@@ -73,15 +74,19 @@ public class MainPaneController {
     @FXML
     private Button SettingButton;
 
-//    录制摄像头按钮
+    //    录制摄像头按钮
     @FXML
     private ToggleButton cameraButton;
 
     //截图
     @FXML
     private void screenShots(){
-        CaptureScreen captureScreen=new CaptureScreen();
-        captureScreen.test();
+//        CaptureScreen captureScreen=new CaptureScreen();
+//        captureScreen.test();
+//
+//        jieping jie=new jieping();
+//        jie.test();
+
 
     }
 
@@ -99,7 +104,7 @@ public class MainPaneController {
             timeline = new Timeline(new KeyFrame(Duration.millis(1000), arg1->{
                 LocalTime endTime=LocalTime.now();
 //            计算时间差
-                java.time.Duration duration = java.time.Duration.between(startTime,endTime );
+                java.time.Duration duration = java.time.Duration.between(startTime,endTime);
 //            更换时间格式
                 String hms = String.format("%d:%02d:%02d",
                         duration.toHoursPart(),
@@ -108,7 +113,7 @@ public class MainPaneController {
 
                 timeLabel.setText(hms);
             }));
-            timeline.setCycleCount(Animation.INDEFINITE );
+            timeline.setCycleCount(Animation.INDEFINITE);
             timeline.play();
         }
         else{
@@ -138,10 +143,16 @@ public class MainPaneController {
             videoRecording=new VideoRecording(video,audio, isMicroPhone);
             videoRecording.start();
 
+            cameraRecording = new CameraRecording(video, audio);
+            cameraRecording.start();
+
+
         }else{
 //            停止计算
             computationTime(false);
             videoRecording.stop();
+            cameraRecording.stop();
+
         }
     }
 
@@ -204,8 +215,17 @@ public class MainPaneController {
 
     @FXML
     private void closePane(ActionEvent event) throws IOException {
-//        Stage stage = (Stage) closeButton.getScene().getWindow();
-//        stage.close();
+        Stage stage = (Stage) closeButton.getScene().getWindow();
+        stage.close();
+
+
+    }
+
+    @FXML
+    private Button playerButton;
+    @FXML
+    private void openPlayer(ActionEvent event) throws IOException {
+
 
         PlayerPane playerPane=new PlayerPane();
         try{

@@ -18,73 +18,71 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="171.0" prefWidth="1012.0" style="-fx-background-radius: 20;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.controller.MainPaneController">
+<AnchorPane prefHeight="150.0" prefWidth="800.0" style="-fx-background-radius: 20;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.openjfx.controller.MainPaneController">
    <children>
-      <Pane layoutX="229.0" prefHeight="171.0" prefWidth="777.0" style="-fx-background-radius: 20;">
+      <Pane layoutX="229.0" prefHeight="150.0" prefWidth="600.0" style="-fx-background-radius: 20;">
          <children>
-            <Pane fx:id="cam" layoutX="-50.0" prefHeight="171.0" prefWidth="834.0" style="-fx-background-color: #8F9E8C;">
+            <Pane fx:id="cam" layoutX="-50.0" prefHeight="156.0" prefWidth="651.0" style="-fx-background-color: #2F2C44;">
                <children>
-                  <Button fx:id="StopButton" layoutX="288.0" layoutY="78.0" mnemonicParsing="false" prefHeight="73.0" prefWidth="77.0" styleClass="button2" stylesheets="@css/buttonattend.css">
+                  <Button fx:id="StopButton" layoutX="265.0" layoutY="59.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="42.0" styleClass="button2" stylesheets="@css/buttonattend.css">
                      <graphic>
-                        <ImageView fitHeight="62.0" fitWidth="76.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="56.0" fitWidth="51.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@Buttonphoto/pause.png" />
                            </image>
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="screenShotsButton" layoutX="426.0" layoutY="78.0" mnemonicParsing="false" onAction="#screenShots" prefHeight="50.0" prefWidth="59.0" styleClass="button2" stylesheets="@css/buttonattend.css">
+                  <Button fx:id="screenShotsButton" layoutX="365.0" layoutY="59.0" mnemonicParsing="false" onAction="#screenShots" prefHeight="50.0" prefWidth="59.0" styleClass="button2" stylesheets="@css/buttonattend.css">
                      <graphic>
-                        <ImageView fitHeight="63.0" fitWidth="118.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="53.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@Buttonphoto/screenshots.png" />
                            </image>
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Slider layoutX="65.0" layoutY="35.0" orientation="VERTICAL" prefHeight="87.0" prefWidth="17.0" />
-                  <Slider layoutX="163.0" layoutY="35.0" orientation="VERTICAL" prefHeight="87.0" prefWidth="17.0" />
-                  <Button layoutX="708.0" layoutY="74.0" mnemonicParsing="false" prefHeight="80.0" prefWidth="82.0" styleClass="button2" stylesheets="@css/buttonattend.css">
+                  <Button fx:id="playerButton" layoutX="557.0" layoutY="59.0" mnemonicParsing="false" onAction="#openPlayer" prefHeight="61.0" prefWidth="42.0" styleClass="button2" stylesheets="@css/buttonattend.css">
                      <graphic>
-                        <ImageView fitHeight="62.0" fitWidth="83.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="50.0" fitWidth="44.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@Buttonphoto/file.png" />
                            </image>
                         </ImageView>
                      </graphic>
                   </Button>
-                  <ToggleButton layoutX="46.0" layoutY="125.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="27.0" styleClass="button2" stylesheets="@css/buttonattend.css">
+                  <ToggleButton layoutX="14.0" layoutY="46.0" mnemonicParsing="false" prefHeight="43.0" prefWidth="46.0" styleClass="button2" stylesheets="@css/buttonattend.css">
                      <graphic>
-                        <ImageView fitHeight="32.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="26.0" fitWidth="34.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@Buttonphoto/volume.png" />
                            </image>
                         </ImageView>
                      </graphic>
                   </ToggleButton>
-                  <ToggleButton layoutX="150.0" layoutY="126.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="37.0" styleClass="button2" stylesheets="@css/buttonattend.css">
+                  <ToggleButton layoutX="72.0" layoutY="97.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="46.0" styleClass="button2" stylesheets="@css/buttonattend.css">
                      <graphic>
-                        <ImageView fitHeight="33.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@Buttonphoto/microphone.png" />
                            </image>
                         </ImageView>
                      </graphic>
                   </ToggleButton>
-                  <Pane layoutY="1.0" prefHeight="37.0" prefWidth="834.0" style="-fx-background-color: #FFFFB9; -fx-background-radius: 0 0 20 20;">
+                  <Pane prefHeight="32.0" prefWidth="651.0" style="-fx-background-color: #FF4355; -fx-background-radius: 0 0 20 20;">
                      <children>
-                        <Button fx:id="SettingButton" layoutX="708.0" layoutY="4.0" mnemonicParsing="false" onAction="#getSettingPane" prefHeight="19.0" prefWidth="34.0" styleClass="button2" stylesheets="@css/buttonattend.css">
+                        <Button fx:id="SettingButton" layoutX="521.0" layoutY="1.0" mnemonicParsing="false" onAction="#getSettingPane" prefHeight="29.0" prefWidth="29.0" styleClass="button3" stylesheets="@css/buttonattend.css">
                            <graphic>
-                              <ImageView fitHeight="22.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="38.0" fitWidth="18.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@Buttonphoto/setting.png" />
                                  </image>
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="closeButton" layoutX="757.0" layoutY="6.0" mnemonicParsing="false" onAction="#closePane" prefHeight="21.0" prefWidth="36.0" styleClass="button2" stylesheets="@css/buttonattend.css">
+                        <Button fx:id="closeButton" layoutX="586.0" layoutY="1.0" mnemonicParsing="false" onAction="#closePane" prefHeight="29.0" prefWidth="29.0" styleClass="button3" stylesheets="@css/buttonattend.css">
                            <graphic>
-                              <ImageView fitHeight="20.0" fitWidth="21.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="38.0" fitWidth="18.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@Buttonphoto/close.png" />
                                  </image>
@@ -93,22 +91,24 @@
                         </Button>
                      </children>
                   </Pane>
-                  <ToggleButton fx:id="cameraButton" layoutX="577.0" layoutY="74.0" mnemonicParsing="false" onAction="#startCameraRecording" prefHeight="73.0" prefWidth="82.0" styleClass="button2" stylesheets="@css/buttonattend.css">
+                  <ToggleButton fx:id="cameraButton" layoutX="464.0" layoutY="58.0" mnemonicParsing="false" onAction="#startCameraRecording" prefHeight="61.0" prefWidth="54.0" styleClass="button2" stylesheets="@css/buttonattend.css">
                      <graphic>
-                        <ImageView fitHeight="70.0" fitWidth="58.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="60.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@Buttonphoto/camera.png" />
                            </image>
                         </ImageView>
                      </graphic>
                   </ToggleButton>
+                  <Slider layoutX="81.0" layoutY="59.0" prefHeight="17.0" prefWidth="107.0" />
+                  <Slider layoutX="139.0" layoutY="111.0" prefHeight="17.0" prefWidth="107.0" />
                </children>
             </Pane>
          </children>
       </Pane>
-      <Pane layoutX="-3.0" prefHeight="171.0" prefWidth="183.0" style="-fx-background-color: #8EA1B1;">
+      <Pane layoutX="-3.0" prefHeight="150.0" prefWidth="182.0" style="-fx-background-color: #383551;">
          <children>
-            <ToggleButton fx:id="recordingButton" layoutX="51.0" layoutY="37.0" mnemonicParsing="false" onAction="#startRecording" prefHeight="49.0" prefWidth="82.0" style="-fx-background-radius: 15;" styleClass="button2" stylesheets="@css/buttonattend.css">
+            <ToggleButton fx:id="recordingButton" layoutX="51.0" layoutY="26.0" mnemonicParsing="false" onAction="#startRecording" prefHeight="49.0" prefWidth="82.0" style="-fx-background-radius: 15;" styleClass="button1" stylesheets="@css/buttonattend.css">
                <graphic>
                   <ImageView fitHeight="39.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -118,7 +118,7 @@
                </graphic>
             </ToggleButton>
             <Pane layoutX="12.0" layoutY="168.0" prefHeight="50.0" prefWidth="135.0" />
-            <Label fx:id="timeLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="23.0" layoutY="102.0" prefHeight="47.0" prefWidth="135.0" text="0:00:00" textAlignment="CENTER">
+            <Label fx:id="timeLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="23.0" layoutY="89.0" prefHeight="47.0" prefWidth="135.0" text="0:00:00" textAlignment="CENTER" textFill="WHITE">
                <font>
                   <Font size="36.0" />
                </font>

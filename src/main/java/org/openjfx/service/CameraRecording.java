@@ -73,7 +73,8 @@ public class CameraRecording {
         grabber.setImageWidth(captureWidth);
         grabber.setImageHeight(captureHeight);
 //        recorder = new FFmpegFrameRecorder(video.getSavePath(), captureWidth, captureHeight, 2);
-        recorder = new FFmpegFrameRecorder(video.getFileName(), captureWidth, captureHeight, 2);
+        recorder = new FFmpegFrameRecorder("tset.flv", captureWidth, captureHeight, 2);
+//        recorder = new FFmpegFrameRecorder(video.getFileName(), captureWidth, captureHeight, 2);
         recorder.setInterleaved(true);
         recorder.setVideoOption("tune", "zerolatency");
         recorder.setVideoOption("preset", "ultrafast");
@@ -186,6 +187,7 @@ public class CameraRecording {
 //        摄像头显示
         // javaCV提供了优化非常好的硬件加速组件来帮助显示我们抓取的摄像头视频
         cFrame = new CanvasFrame("Capture Preview", CanvasFrame.getDefaultGamma() / grabber.getGamma());
+        cFrame.setCanvasSize(640,480);
         Frame capturedFrame = null;
 //        合并图片成视频
         // 执行抓取（capture）过程
