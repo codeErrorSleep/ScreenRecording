@@ -10,13 +10,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import org.bytedeco.javacv.CanvasFrame;
+import org.bytedeco.javacv.OpenCVFrameGrabber;
 import org.openjfx.domain.Audio;
 import org.openjfx.domain.Video;
-import org.openjfx.service.CameraRecording;
-import org.openjfx.service.CaptureScreen;
-import org.openjfx.service.SettingUtils;
-import org.openjfx.service.VideoRecording;
+import org.openjfx.service.*;
+import org.openjfx.service.test;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.time.LocalTime;
@@ -30,8 +31,6 @@ import java.time.LocalTime;
  */
 public class MainPaneController {
 
-
-
     //  视频设置类
     private Video video;
     //  音频设置类
@@ -43,7 +42,8 @@ public class MainPaneController {
     private VideoRecording videoRecording;
     //    录制摄像头实例
     private CameraRecording cameraRecording;
-
+//    录制屏幕时显示摄像头的内容
+    private DisplayCamera displayCamera;
 
     //  时间线控件(计算时间差)
     private Timeline timeline;
@@ -81,13 +81,11 @@ public class MainPaneController {
     //截图
     @FXML
     private void screenShots(){
-//        CaptureScreen captureScreen=new CaptureScreen();
-//        captureScreen.test();
+        CaptureScreen captureScreen=new CaptureScreen();
+        captureScreen.test();
 //
 //        jieping jie=new jieping();
 //        jie.test();
-
-
     }
 
 
@@ -130,29 +128,34 @@ public class MainPaneController {
      */
     @FXML
     private void startRecording(ActionEvent event){
+
+
 //        判断是否点击录制按钮８
         if (recordingButton.isSelected()){
-//            计算时间差
-            computationTime(true);
+
 //            新建视频音频属性类
             settingUtils=new SettingUtils();
             settingUtils.checkJsonFile();
             video=settingUtils.readVidioJSON();
             audio=settingUtils.readAudioJSON();
-
+//            开始录制屏幕
             videoRecording=new VideoRecording(video,audio, isMicroPhone);
             videoRecording.start();
+//          弹出窗口显示摄像头内容
+            displayCamera=new DisplayCamera();
+            displayCamera.start();
 
-            cameraRecording = new CameraRecording(video, audio);
-            cameraRecording.start();
-
+//            在开始后才开始计算时间
+//            计算时间差
+            computationTime(true);
 
         }else{
 //            停止计算
             computationTime(false);
             videoRecording.stop();
-            cameraRecording.stop();
+            displayCamera.stop();
 
+//            testee.stop();
         }
     }
 

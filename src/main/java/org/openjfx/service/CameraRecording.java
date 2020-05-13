@@ -72,9 +72,9 @@ public class CameraRecording {
         grabber = new OpenCVFrameGrabber(WEBCAM_DEVICE_INDEX);
         grabber.setImageWidth(captureWidth);
         grabber.setImageHeight(captureHeight);
-//        recorder = new FFmpegFrameRecorder(video.getSavePath(), captureWidth, captureHeight, 2);
-        recorder = new FFmpegFrameRecorder("tset.flv", captureWidth, captureHeight, 2);
-//        recorder = new FFmpegFrameRecorder(video.getFileName(), captureWidth, captureHeight, 2);
+//        先防止名字相同不能保存
+        recorder = new FFmpegFrameRecorder(video.getSavePath()+"test.flv", captureWidth, captureHeight, 2);
+//        recorder = new FFmpegFrameRecorder("tset.flv", captureWidth, captureHeight, 2);
         recorder.setInterleaved(true);
         recorder.setVideoOption("tune", "zerolatency");
         recorder.setVideoOption("preset", "ultrafast");
