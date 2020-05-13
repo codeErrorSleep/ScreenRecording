@@ -1,28 +1,70 @@
 
 /* 修改Tab的背景颜色 */
 .tab {
-    -fx-background-color: #C1D5BA;
+    -fx-background-color: #7A788B;
+
 }
+.tab-pane>*.tab-header-area>*.headers-region
+{
+    -fx-border-radius: 0px;
+    -fx-border-width: 0px;
+}
+
+
+
 /* 修改顶栏的背景颜色 */
 .tab-pane>*.tab-header-area>*.tab-header-background
 {
-    -fx-background-color: -fx-outer-border, -fx-text-box-border, #9CAAAA;
+    -fx-background-color: -fx-outer-border, -fx-text-box-border, #383551;
 }
 /* 修改Tab中文本的颜色 */
 .tab-label {
-    -fx-text-fill: #003333ff;
+    -fx-text-fill: #e6e6e6;
 }
 /* 子代选择器，Tab选中的时候选择其子元素tab-label */
 .tab:selected .tab-label {
-    -fx-text-fill: #e6e6e6;
+    -fx-text-fill: #2F2C44;
 }
 /* tab选中时设置背景颜色 */
 .tab:selected {
-    -fx-background-color: #637D92;
+    -fx-background-color: #FF4355;
 }
 /* Tab选中的时候选中其边框并修改样式 */
 .tab-pane:focused > .tab-header-area > .headers-region > .tab:selected .focus-indicator {
     -fx-border-radius: 0px;
     -fx-border-width: 0px;
     -fx-border-color: #4d1a4dff;
+}
+
+
+
+
+
+
+
+.label
+{
+    -fx-text-fill: #e6e6e6;
+    -fx-border-radius: 30;
+}
+
+
+.combobox1
+{
+    -fx-background-color :  #2F2C44;
+    -fx-background-radius: 30;
+    -fx-border-color:  #FFFF;
+    -fx-border-radius: 30;
+}
+.combobox1:hover
+{
+    -fx-background-color : #67657A;
+    -fx-border-color:  #FFFF;
+    -fx-border-radius: 30;
+}
+.combobox1:pressed
+{
+    -fx-background-color : #222128;
+    -fx-border-color:  #FFFF;
+    -fx-border-radius: 30;
 }
