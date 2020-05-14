@@ -86,24 +86,23 @@
 }
 
 
-.combobox1
+
+
+.slider1 . track
 {
-    -fx-background-color : #9CAAAA;
-    -fx-border-color:  #515658;
-    -fx-border-radius: 30;
+    -fx-background-color :#AA2C38;
 }
-.combobox1:hover
+.slider1 . thumb
 {
-    -fx-background-color : #9CAAAA;
-    -fx-border-color:  #FFFF;
-    -fx-border-radius: 30;
+
+    -fx-background-color :#E2B8BC;
 }
-.combobox1:pressed
-{
-    -fx-background-color : #9CAAAA;
-    -fx-border-color:  #FFFF;
-    -fx-border-radius: 30;
-}
+
+
+
+
+
+
 
 .table-view .column-header,
 .table-view .column-header-background .filler {

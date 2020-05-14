@@ -60,7 +60,7 @@
                         </ImageView>
                      </graphic>
                   </ToggleButton>
-                  <ToggleButton layoutX="72.0" layoutY="97.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="46.0" styleClass="button2" stylesheets="@css/buttonattend.css">
+                  <ToggleButton fx:id="microPhoneButton" layoutX="72.0" layoutY="97.0" mnemonicParsing="false" onAction="#isOpenMicroPhone" prefHeight="42.0" prefWidth="46.0" styleClass="button2" stylesheets="@css/buttonattend.css">
                      <graphic>
                         <ImageView fitHeight="33.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -100,15 +100,15 @@
                         </ImageView>
                      </graphic>
                   </ToggleButton>
-                  <Slider layoutX="81.0" layoutY="59.0" prefHeight="17.0" prefWidth="107.0" />
-                  <Slider layoutX="139.0" layoutY="111.0" prefHeight="17.0" prefWidth="107.0" />
+                  <Slider layoutX="81.0" layoutY="59.0" prefHeight="17.0" prefWidth="107.0" styleClass="slider1" stylesheets="@css/buttonattend.css" />
+                  <Slider layoutX="139.0" layoutY="111.0" prefHeight="17.0" prefWidth="107.0" styleClass="slider1" stylesheets="@css/buttonattend.css" />
                </children>
             </Pane>
          </children>
       </Pane>
       <Pane layoutX="-3.0" prefHeight="150.0" prefWidth="182.0" style="-fx-background-color: #383551;">
          <children>
-            <ToggleButton fx:id="recordingButton" layoutX="51.0" layoutY="26.0" mnemonicParsing="false" onAction="#startRecording" prefHeight="49.0" prefWidth="82.0" style="-fx-background-radius: 15;" styleClass="button1" stylesheets="@css/buttonattend.css">
+            <ToggleButton fx:id="recordingButton" layoutX="40.0" layoutY="18.0" mnemonicParsing="false" onAction="#startRecording" prefHeight="49.0" prefWidth="82.0" style="-fx-background-radius: 15;" styleClass="button1" stylesheets="@css/buttonattend.css">
                <graphic>
                   <ImageView fitHeight="39.0" fitWidth="68.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -123,6 +123,15 @@
                   <Font size="36.0" />
                </font>
             </Label>
+            <ToggleButton fx:id="showCamerasButton" layoutX="128.0" layoutY="58.0" mnemonicParsing="false" onAction="#isShowCamera" prefHeight="17.0" prefWidth="38.0" styleClass="button2" stylesheets="@css/buttonattend.css">
+               <graphic>
+                  <ImageView fitHeight="26.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@Buttonphoto/camera1.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </ToggleButton>
          </children>
       </Pane>
    </children>

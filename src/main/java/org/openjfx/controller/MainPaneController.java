@@ -50,7 +50,8 @@ public class MainPaneController {
 
     //    判断是否打开麦克风标志
     private boolean isMicroPhone=false;
-
+//    判断是否打开摄像头界面
+    private boolean isDisplayCamera=false;
 
     //跳转设置界面
     @FXML
@@ -78,14 +79,18 @@ public class MainPaneController {
     @FXML
     private ToggleButton cameraButton;
 
+//    是否打开摄像头按钮
+    @FXML
+    private ToggleButton showCamerasButton;
+
     //截图
     @FXML
     private void screenShots(){
+        Stage stage = (Stage) cameraButton.getScene().getWindow();
+        stage.hide();
         CaptureScreen captureScreen=new CaptureScreen();
         captureScreen.test();
-//
-//        jieping jie=new jieping();
-//        jie.test();
+        stage.show();
     }
 
 
@@ -141,9 +146,12 @@ public class MainPaneController {
 //            开始录制屏幕
             videoRecording=new VideoRecording(video,audio, isMicroPhone);
             videoRecording.start();
-//          弹出窗口显示摄像头内容
-            displayCamera=new DisplayCamera();
-            displayCamera.start();
+
+//          打开摄像头
+            if (isDisplayCamera){
+                displayCamera=new DisplayCamera();
+                displayCamera.start();
+            }
 
 //            在开始后才开始计算时间
 //            计算时间差
@@ -153,11 +161,15 @@ public class MainPaneController {
 //            停止计算
             computationTime(false);
             videoRecording.stop();
-            displayCamera.stop();
+//            关闭摄像头
+            if (isDisplayCamera){
+                displayCamera.stop();
+            }
 
-//            testee.stop();
         }
     }
+
+
 
 
     /**
@@ -206,12 +218,29 @@ public class MainPaneController {
 //       判断是否点击麦克风录制按钮
         if(microPhoneButton.isSelected()){
             isMicroPhone=true;
-            microPhoneButton.setText("使用麦克风");
+            System.out.println("使用麦克风");
         }
         else{
             isMicroPhone=false;
-            microPhoneButton.setText("麦克风");
+            System.out.println("麦克风");
         }
+
+    }
+
+
+//    是否打开摄像头界面
+    @FXML
+    private void isShowCamera(){
+        if (showCamerasButton.isSelected()){
+            isDisplayCamera=true;
+            System.out.println("打开摄像头");
+        }
+        else{
+            isDisplayCamera=false;
+            System.out.println("关闭摄像头");
+
+        }
+
 
     }
 
