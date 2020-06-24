@@ -1,10 +1,7 @@
 package org.openjfx.service;
 
 import org.bytedeco.ffmpeg.global.avcodec;
-import org.bytedeco.javacv.CanvasFrame;
-import org.bytedeco.javacv.FFmpegFrameRecorder;
-import org.bytedeco.javacv.Frame;
-import org.bytedeco.javacv.OpenCVFrameGrabber;
+import org.bytedeco.javacv.*;
 import org.openjfx.domain.Audio;
 import org.openjfx.domain.Video;
 
@@ -53,15 +50,18 @@ public class CameraRecording {
     FFmpegFrameRecorder recorder;
     //  音频设置类
     AudioFormat audioFormat;
+//    音频类选型
+    TargetDataLine line;
+    DataLine.Info dataLineInfo;
 
 
-    /**
-     * 初始化视频参数
-     * @author      qiushao
-     * @date        20-5-5 上午10:51
-     */
+
+        /**
+         * 初始化视频参数
+         * @author      qiushao
+         * @date        20-5-5 上午10:51
+         */
     public CameraRecording(Video video, Audio audio) {
-
 //        设置分辨率
         captureWidth=video.getVideoWidth();
         captureHeight=video.getVideoHeigth();
@@ -110,7 +110,6 @@ public class CameraRecording {
     }
 
 
-
     /**
      * 录制音频
      * @author      qiushao
@@ -129,13 +128,13 @@ public class CameraRecording {
         // 通过AudioSystem获取本地音频混合器
         Mixer mixer = AudioSystem.getMixer(minfoSet[AUDIO_DEVICE_INDEX]);
         // 通过设置好的音频编解码器获取数据线信息
-        DataLine.Info dataLineInfo = new DataLine.Info(TargetDataLine.class, audioFormat);
+        dataLineInfo = new DataLine.Info(TargetDataLine.class, audioFormat);
         try {
             // 打开并开始捕获音频
             // 通过line可以获得更多控制权
             // 获取设备：TargetDataLine line
             // =(TargetDataLine)mixer.getLine(dataLineInfo);
-            TargetDataLine line = (TargetDataLine) AudioSystem.getLine(dataLineInfo);
+            line = (TargetDataLine) AudioSystem.getLine(dataLineInfo);
             line.open(audioFormat);
             line.start();
             // 获得当前音频采样率
@@ -299,11 +298,4 @@ public class CameraRecording {
     }
 
 
-
-//
-//    public static void main(String[] args) throws Exception {
-////        Loader.load(opencv_objdetect.class);
-//        CameraRecording(
-//                "test3",640,480,25);
-//    }
 }

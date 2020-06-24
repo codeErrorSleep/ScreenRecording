@@ -24,7 +24,7 @@
          <children>
             <Pane fx:id="cam" layoutX="-50.0" prefHeight="156.0" prefWidth="651.0" style="-fx-background-color: #2F2C44;">
                <children>
-                  <Button fx:id="StopButton" layoutX="265.0" layoutY="59.0" mnemonicParsing="false" prefHeight="57.0" prefWidth="42.0" styleClass="button2" stylesheets="@css/buttonattend.css">
+                  <ToggleButton fx:id="pauseButton" layoutX="265.0" layoutY="59.0" mnemonicParsing="false" onAction="#pauseRecording" prefHeight="57.0" prefWidth="42.0" styleClass="button2" stylesheets="@css/buttonattend.css">
                      <graphic>
                         <ImageView fitHeight="56.0" fitWidth="51.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -32,7 +32,7 @@
                            </image>
                         </ImageView>
                      </graphic>
-                  </Button>
+                  </ToggleButton>
                   <Button fx:id="screenShotsButton" layoutX="365.0" layoutY="59.0" mnemonicParsing="false" onAction="#screenShots" prefHeight="50.0" prefWidth="59.0" styleClass="button2" stylesheets="@css/buttonattend.css">
                      <graphic>
                         <ImageView fitHeight="53.0" fitWidth="53.0" pickOnBounds="true" preserveRatio="true">

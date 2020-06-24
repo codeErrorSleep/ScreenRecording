@@ -11,11 +11,11 @@ import javafx.scene.control.ToggleButton;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import org.bytedeco.javacv.CanvasFrame;
+import org.bytedeco.javacv.FrameRecorder;
 import org.bytedeco.javacv.OpenCVFrameGrabber;
 import org.openjfx.domain.Audio;
 import org.openjfx.domain.Video;
 import org.openjfx.service.*;
-import org.openjfx.service.test;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -39,7 +39,7 @@ public class MainPaneController {
     private SettingUtils settingUtils;
 
     //　录制屏幕实例
-    private VideoRecording videoRecording;
+    private VideoRecording videoRecording=new VideoRecording();
     //    录制摄像头实例
     private CameraRecording cameraRecording;
 //    录制屏幕时显示摄像头的内容
@@ -82,6 +82,10 @@ public class MainPaneController {
 //    是否打开摄像头按钮
     @FXML
     private ToggleButton showCamerasButton;
+//  暂停按钮
+    @FXML
+    private ToggleButton pauseButton;
+
 
     //截图
     @FXML
@@ -133,8 +137,6 @@ public class MainPaneController {
      */
     @FXML
     private void startRecording(ActionEvent event){
-
-
 //        判断是否点击录制按钮８
         if (recordingButton.isSelected()){
 
@@ -144,7 +146,8 @@ public class MainPaneController {
             video=settingUtils.readVidioJSON();
             audio=settingUtils.readAudioJSON();
 //            开始录制屏幕
-            videoRecording=new VideoRecording(video,audio, isMicroPhone);
+//            videoRecording=new VideoRecording(video,audio, isMicroPhone);
+            videoRecording.initialize(video,audio,isMicroPhone);
             videoRecording.start();
 
 //          打开摄像头
@@ -171,6 +174,22 @@ public class MainPaneController {
 
 
 
+    /**
+     * 暂停录制
+     * @author      qiushao
+     * @date        20-5-5 上午11:29
+     */
+    @FXML
+    public void pauseRecording(){
+        if(pauseButton.isSelected()){
+            System.out.println("暂停录制");
+            videoRecording.pause();
+        }else{
+            System.out.println("取消暂停");
+            videoRecording.start();
+        }
+
+    }
 
     /**
      * 摄像头录制
@@ -188,7 +207,7 @@ public class MainPaneController {
             video = settingUtils.readVidioJSON();
             audio = settingUtils.readAudioJSON();
 
-            cameraRecording = new CameraRecording(video, audio);
+            cameraRecording=new CameraRecording(video,audio);
             cameraRecording.start();
         }else{
             //            停止计算
@@ -196,6 +215,9 @@ public class MainPaneController {
             cameraRecording.stop();
         }
     }
+
+
+
 
 
     //跳转设置界面

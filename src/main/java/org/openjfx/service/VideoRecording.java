@@ -49,6 +49,9 @@ public class VideoRecording {
     private double frameRate = 25;
 
 
+    public VideoRecording() {
+    }
+
 
     public VideoRecording(Video video, Audio audio, boolean isHaveDevice){
         /**
@@ -113,6 +116,71 @@ public class VideoRecording {
 
 
     /**
+    * 初始化
+    * @author      qiushao
+    * @date        20-6-24 下午4:15
+    */
+    public void initialize(Video video, Audio audio, boolean isHaveDevice){
+        /**
+         * 视频设置
+         */
+        System.out.println(video.getSavePath());
+//        视频属性设置
+        recorder = new FFmpegFrameRecorder(video.getSavePath(), screenSize.width, screenSize.height);
+//        视频编码格式e
+//        recorder.setVideoCodec(avcodec.AV_CODEC_ID_MPEG4); // 13
+        recorder.setVideoCodec(avcodec.AV_CODEC_ID_H264);
+
+//        视频文件格式
+        recorder.setFormat(video.getSaveFormat());
+        // 视频帧率(保证视频质量的情况下最低25，低于25会出现闪屏)
+        recorder.setFrameRate(video.getFrameRate());
+        // 关键帧间隔，一般与帧率相同或者是视频帧率的两倍
+        recorder.setGopSize((int) frameRate * 2);
+//        分辨率设置
+        recorder.setImageWidth(video.getVideoWidth());
+        recorder.setImageHeight(video.getVideoHeigth());
+
+        recorder.setVideoBitrate(2000000);
+        recorder.setVideoOption("tune", "zerolatency");
+        recorder.setVideoOption("preset", "slow");
+        recorder.setVideoQuality(0);
+        recorder.setVideoOption("crf", "25");
+
+
+        /**
+         * 音频设置
+         */
+        // 不可变(固定)音频比特率
+        recorder.setAudioOption("crf", "0");
+        // 最高质量
+        recorder.setAudioQuality(audio.getAudioQuality());
+        // 音频比特率
+        recorder.setAudioBitrate(audio.getAudioBitrate());
+        // 音频采样率
+        recorder.setSampleRate(audio.getSampleRate());
+        // 双通道(立体声)
+        recorder.setAudioChannels(audio.getAudioChannels());
+        // 音频编/解码器
+        recorder.setAudioCodec(avcodec.AV_CODEC_ID_AAC);
+
+        try {
+            robot = new Robot();
+        } catch (AWTException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        try {
+            recorder.start();
+        } catch (FrameRecorder.Exception e) {
+            // TODO Auto-generated catch block
+            System.out.print("*******************************");
+        }
+        this.isHaveDevice = isHaveDevice;
+    }
+
+
+    /**
      * 开始录制
      */
     public void start() {
@@ -134,9 +202,6 @@ public class VideoRecording {
                 }
             }).start();
         }
-
-
-
             // 录屏
         screenTimer = new ScheduledThreadPoolExecutor(1);
         screenTimer.scheduleAtFixedRate(new Runnable() {
@@ -289,6 +354,23 @@ public class VideoRecording {
         }
     }
 
-
-
+    /**
+    * 暂停
+    * @author      qiushao
+    * @date        20-6-24 下午4:17
+    */
+    public void pause(){
+        screenTimer.shutdownNow();
+        screenTimer = null;
+        if (isHaveDevice) {
+            exec.shutdownNow();
+            exec = null;
+            line.stop();
+            line.close();
+            dataLineInfo = null;
+            audioFormat = null;
+            line=null;
+        }
+        pauseTime = System.currentTimeMillis();
+    }
 }
